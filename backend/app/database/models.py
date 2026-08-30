@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, JSON
 from datetime import datetime, timezone
 
 from app.database.database import Base
@@ -24,7 +24,7 @@ class IOC(Base):
 
     severity = Column(String)
 
-    tags = Column(String)
+    tags = Column(JSON)
 
     created_at = Column(
         DateTime,

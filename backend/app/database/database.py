@@ -1,7 +1,15 @@
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = "postgresql://postgres:aranea05@localhost:5432/ctip"
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL is not configured")
 
 engine = create_engine(
     DATABASE_URL,
@@ -19,6 +27,7 @@ Base = declarative_base()
 
 def get_db():
     db = SessionLocal()
+
     try:
         yield db
     finally:
