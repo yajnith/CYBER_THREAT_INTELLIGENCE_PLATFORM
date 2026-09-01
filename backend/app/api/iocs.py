@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -19,42 +21,33 @@ def create_ioc(
 ):
     normalized = normalize_ioc(ioc)
 
-    record = IOC(**normalized)
+    now = datetime.now(timezone.utc)
+
+    existing = (
+        db.query(IOC)
+        .filter(
+            IOC.indicator_type == normalized["indicator_type"],
+            IOC.normalized_value == normalized["normalized_value"]
+        )
+        .first()
+    )
+
+    if existing:
+        existing.last_seen = now
+
+        db.commit()
+        db.refresh(existing)
+
+        return existing
+
+    record = IOC(
+        **normalized,
+        first_seen=now,
+        last_seen=now,
+    )
 
     db.add(record)
     db.commit()
     db.refresh(record)
-
-    return record
-
-
-@router.get("")
-def get_iocs(
-    db: Session = Depends(get_db)
-):
-    records = db.query(IOC).all()
-
-    return {
-        "count": len(records),
-        "data": records
-    }
-
-
-@router.get("/{ioc_id}")
-def get_ioc(
-    ioc_id: int,
-    db: Session = Depends(get_db)
-):
-    record = (
-        db.query(IOC)
-        .filter(IOC.id == ioc_id)
-        .first()
-    )
-
-    if not record:
-        raise HTTPException(
-            status_code=404,
-            detail="IOC not found"
-        )
 
     return record
