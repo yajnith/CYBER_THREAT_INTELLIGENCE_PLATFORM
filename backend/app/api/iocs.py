@@ -1,3 +1,5 @@
+from app.enrichment.ioc_enricher import enrich_ioc
+
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -21,6 +23,11 @@ def create_ioc(
     db: Session = Depends(get_db)
 ):
     normalized = normalize_ioc(ioc)
+
+    enrichment = enrich_ioc(
+        ioc.indicator_type.value,
+        normalized["normalized_value"]
+    )
 
     risk_score = calculate_risk_score(
         ioc.severity.value,
@@ -49,7 +56,8 @@ def create_ioc(
         return {
             "ioc": existing,
             "risk_score": risk_score,
-            "risk_level": risk_level
+            "risk_level": risk_level,
+            "enrichment": enrichment
         }
 
     record = IOC(
@@ -65,5 +73,6 @@ def create_ioc(
     return {
         "ioc": record,
         "risk_score": risk_score,
-        "risk_level": risk_level
+        "risk_level": risk_level,
+        "enrichment": enrichment
     }
