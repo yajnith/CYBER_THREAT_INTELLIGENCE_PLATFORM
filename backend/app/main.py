@@ -1,5 +1,5 @@
-from fastapi import FastAPI  # type: ignore[reportMissingImports]
-from fastapi.middleware.cors import CORSMiddleware  # type: ignore[reportMissingImports]
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.database.database import engine
 from app.database.database import Base
 import app.database.models

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import IOCInvestigation from './components/IOCInvestigation'
+import IOCSubmission from './components/IOCSubmission'
 import './App.css'
 
 function App() {
@@ -86,6 +87,16 @@ function App() {
           >
             <span>◈</span>
             IOC Intelligence
+          </div>
+
+          <div
+            className={`nav-item ${
+              view === 'submission' ? 'active' : ''
+            }`}
+            onClick={() => setView('submission')}
+          >
+            <span>＋</span>
+            Submit IOC
           </div>
 
           <div
@@ -381,6 +392,8 @@ function App() {
           </>
         ) : view === 'investigation' ? (
           <IOCInvestigation />
+        ) : view === 'submission' ? (
+          <IOCSubmission />
         ) : (
           <IOCInvestigation />
         )}
