@@ -1,0 +1,38 @@
+[
+  {
+    "indicator_type": "domain",
+    "value": "malicious-example.com",
+    "source": "sample_feed_alpha",
+    "threat_type": "command_and_control",
+    "confidence": 90,
+    "severity": "high",
+    "tags": ["c2", "malware"]
+  },
+  {
+    "indicator_type": "ipv4",
+    "value": "192.0.2.55",
+    "source": "sample_feed_alpha",
+    "threat_type": "botnet",
+    "confidence": 85,
+    "severity": "high",
+    "tags": ["botnet", "network"]
+  },
+  {
+    "indicator_type": "url",
+    "value": "https://malicious-example.com/login",
+    "source": "sample_feed_beta",
+    "threat_type": "phishing",
+    "confidence": 80,
+    "severity": "medium",
+    "tags": ["phishing", "credential_theft"]
+  },
+  {
+    "indicator_type": "hash_sha256",
+    "value": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "source": "sample_feed_beta",
+    "threat_type": "malware",
+    "confidence": 95,
+    "severity": "critical",
+    "tags": ["malware", "sha256"]
+  }
+]
