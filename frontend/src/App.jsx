@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import IOCInvestigation from './components/IOCInvestigation'
 import IOCSubmission from './components/IOCSubmission'
+import IOCSearch from './components/IOCSearch'
 import './App.css'
 
 function App() {
@@ -394,8 +395,10 @@ function App() {
           <IOCInvestigation />
         ) : view === 'submission' ? (
           <IOCSubmission />
+        ) : view === 'search' ? (
+          <IOCSearch />
         ) : (
-          <IOCInvestigation />
+          <IOCSearch />
         )}
       </main>
     </div>
