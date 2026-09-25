@@ -9,6 +9,7 @@ from app.scoring.risk_scorer import (
     calculate_risk_score,
     get_risk_level,
 )
+from app.services.ioc_correlation import get_ioc_correlation
 from app.services.ioc_service import process_ioc
 
 
@@ -108,6 +109,11 @@ def get_ioc(
         .all()
     )
 
+    correlation = get_ioc_correlation(
+        record.id,
+        db,
+    )
+
     enrichment = enrich_ioc(
         record.indicator_type,
         record.normalized_value,
@@ -126,4 +132,5 @@ def get_ioc(
         "risk_level": risk_level,
         "enrichment": enrichment,
         "observations": observations,
+        "correlation": correlation,
     }
