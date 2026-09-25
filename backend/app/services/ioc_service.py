@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 from sqlalchemy.orm import Session
 
-from app.database.models import IOC
+from app.database.models import IOC, IOCObservation
 from app.enrichment.ioc_enricher import enrich_ioc
 from app.normalization.ioc_normalizer import normalize_ioc
 from app.schemas.ioc import IOCCreate
@@ -43,24 +43,26 @@ def process_ioc(
 
     if existing:
         existing.last_seen = now
+        record = existing
 
-        db.commit()
-        db.refresh(existing)
+    else:
+        record = IOC(
+            **normalized,
+            first_seen=now,
+            last_seen=now,
+        )
 
-        return {
-            "ioc": existing,
-            "risk_score": risk_score,
-            "risk_level": risk_level,
-            "enrichment": enrichment,
-        }
+        db.add(record)
+        db.flush()
 
-    record = IOC(
-        **normalized,
-        first_seen=now,
-        last_seen=now,
+    observation = IOCObservation(
+        ioc_id=record.id,
+        source=ioc.source,
+        observed_at=now,
     )
 
-    db.add(record)
+    db.add(observation)
+
     db.commit()
     db.refresh(record)
 

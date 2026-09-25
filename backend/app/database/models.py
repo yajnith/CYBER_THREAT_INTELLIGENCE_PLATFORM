@@ -1,4 +1,13 @@
-from sqlalchemy import Column, Integer, String, DateTime, JSON, UniqueConstraint
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    DateTime,
+    JSON,
+    UniqueConstraint,
+    ForeignKey,
+    Index,
+)
 from datetime import datetime, timezone
 
 from app.database.database import Base
@@ -48,4 +57,41 @@ class IOC(Base):
     created_at = Column(
         DateTime,
         default=lambda: datetime.now(timezone.utc)
+    )
+
+
+class IOCObservation(Base):
+
+    __tablename__ = "ioc_observations"
+
+    __table_args__ = (
+        Index(
+            "ix_ioc_observations_ioc_id",
+            "ioc_id",
+        ),
+        Index(
+            "ix_ioc_observations_source",
+            "source",
+        ),
+    )
+
+    id = Column(
+    Integer,
+    primary_key=True,
+    )
+
+    ioc_id = Column(
+        Integer,
+        ForeignKey("iocs.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+
+    source = Column(
+        String,
+        nullable=False,
+    )
+
+    observed_at = Column(
+        DateTime,
+        nullable=False,
     )

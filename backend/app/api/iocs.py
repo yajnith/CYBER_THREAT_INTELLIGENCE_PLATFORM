@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
-from app.database.models import IOC
+from app.database.models import IOC, IOCObservation
 from app.enrichment.ioc_enricher import enrich_ioc
 from app.schemas.ioc import IOCCreate
 from app.scoring.risk_scorer import (
@@ -101,6 +101,13 @@ def get_ioc(
             detail="IOC not found",
         )
 
+    observations = (
+        db.query(IOCObservation)
+        .filter(IOCObservation.ioc_id == record.id)
+        .order_by(IOCObservation.observed_at.desc())
+        .all()
+    )
+
     enrichment = enrich_ioc(
         record.indicator_type,
         record.normalized_value,
@@ -118,4 +125,5 @@ def get_ioc(
         "risk_score": risk_score,
         "risk_level": risk_level,
         "enrichment": enrichment,
+        "observations": observations,
     }
