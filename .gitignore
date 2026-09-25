@@ -66,3 +66,5 @@ pnpm-debug.log*
 # Temporary files
 *.tmp
 *.temp
+# Research datasets
+research_data/urlhaus/*.json
