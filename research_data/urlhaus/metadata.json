@@ -1,0 +1,32 @@
+﻿{
+  "dataset": "URLhaus",
+  "source": "URLhaus recent URL export",
+  "collection_timestamp": "2026-09-25 17:01:23 +05:30",
+  "raw_record_count": 14354,
+  "unique_url_count": 14354,
+  "duplicate_url_count": 0,
+  "normalized_record_count": 14354,
+  "threat_distribution": {
+    "malware_download": 14354
+  },
+  "url_status_distribution": {
+    "offline": 12624,
+    "online": 1730
+  },
+  "missing_values": {
+    "url": 0,
+    "date_added": 0,
+    "url_status": 0,
+    "last_online": 1567,
+    "threat": 0,
+    "tags": 0,
+    "reporter": 0
+  },
+  "unique_reporters": 95,
+  "preprocessing": [
+    "Flattened URLhaus ID to record structure",
+    "Normalized field names",
+    "Converted null tags to empty lists",
+    "Verified URL uniqueness"
+  ]
+}

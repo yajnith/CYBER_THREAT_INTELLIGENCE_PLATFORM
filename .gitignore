@@ -68,3 +68,6 @@ pnpm-debug.log*
 *.temp
 # Research datasets
 research_data/urlhaus/*.json
+
+# Keep research metadata
+!research_data/urlhaus/metadata.json
