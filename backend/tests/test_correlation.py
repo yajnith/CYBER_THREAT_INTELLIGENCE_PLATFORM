@@ -3,7 +3,7 @@ from app.database.models import IOC, IOCObservation
 from app.services.ioc_correlation import get_ioc_correlation
 
 
-def test_ioc_correlation_counts_distinct_sources():
+def test_ioc_correlation_counts_sources_and_threat_types():
     db = SessionLocal()
 
     try:
@@ -12,7 +12,7 @@ def test_ioc_correlation_counts_distinct_sources():
             value="pytest-correlation.example",
             normalized_value="pytest-correlation.example",
             source="correlation_feed_a",
-            threat_type="test",
+            threat_type="malware",
             confidence=80,
             severity="high",
             tags=["pytest"],
@@ -53,6 +53,8 @@ def test_ioc_correlation_counts_distinct_sources():
             "correlation_feed_a",
             "correlation_feed_b",
         ]
+        assert result["threat_type_count"] == 1
+        assert result["threat_types"] == ["malware"]
 
     finally:
         test_ioc = (

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from app.database.models import IOCObservation
+from app.database.models import IOC, IOCObservation
 
 
 def get_ioc_correlation(
@@ -21,9 +21,22 @@ def get_ioc_correlation(
         }
     )
 
+    ioc = (
+        db.query(IOC)
+        .filter(IOC.id == ioc_id)
+        .first()
+    )
+
+    threat_types = []
+
+    if ioc and ioc.threat_type:
+        threat_types = [ioc.threat_type]
+
     return {
         "ioc_id": ioc_id,
         "source_count": len(sources),
         "sources": sources,
         "observation_count": len(observations),
+        "threat_type_count": len(threat_types),
+        "threat_types": threat_types,
     }
