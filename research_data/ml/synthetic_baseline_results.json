@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "result_type": "SYNTHETIC BENCHMARK RESULT",
+    "dataset_type": "controlled_synthetic_benchmark",
+    "synthetic": true,
+    "real_world_ground_truth": false,
+    "derived_from_human_validated_urlhaus_labels": false,
+    "random_seed": 8137,
+    "split_seed": 2026,
+    "split_strategy": "StratifiedShuffleSplit equivalent; 75% train / 25% test within each class.",
+    "model_implementation": "Dependency-free reference baselines; scikit-learn unavailable.",
+    "implementation_version": "ctip_reference_baselines_v1",
+    "python_version": "3.12.14",
+    "scikit_learn_available": false,
+    "benchmark_size": 600,
+    "class_counts": {
+      "positive": 300,
+      "negative": 300
+    },
+    "train_size": 450,
+    "test_size": 150,
+    "train_class_counts": {
+      "positive": 225,
+      "negative": 225
+    },
+    "test_class_counts": {
+      "positive": 75,
+      "negative": 75
+    },
+    "models": [
+      "LogisticRegression",
+      "GaussianNaiveBayes"
+    ]
+  },
+  "experiments": {
+    "A": {
+      "name": "IOC-only",
+      "feature_groups": [
+        "A_ioc_only"
+      ],
+      "feature_count": 20,
+      "encoded_model_column_count": 23,
+      "models": {
+        "LogisticRegression": {
+          "result_type": "SYNTHETIC BENCHMARK RESULT",
+          "metrics": {
+            "accuracy": 0.653333,
+            "precision": 0.632184,
+            "recall": 0.733333,
+            "f1": 0.679012,
+            "roc_auc": 0.696178
+          }
+        },
+        "GaussianNaiveBayes": {
+          "result_type": "SYNTHETIC BENCHMARK RESULT",
+          "metrics": {
+            "accuracy": 0.68,
+            "precision": 0.675325,
+            "recall": 0.693333,
+            "f1": 0.684211,
+            "roc_auc": 0.6944
+          }
+        }
+      }
+    },
+    "B": {
+      "name": "IOC + observation/correlation",
+      "feature_groups": [
+        "A_ioc_only",
+        "B_ioc_plus_observation_correlation"
+      ],
+      "feature_count": 28,
+      "encoded_model_column_count": 31,
+      "models": {
+        "LogisticRegression": {
+          "result_type": "SYNTHETIC BENCHMARK RESULT",
+          "metrics": {
+            "accuracy": 0.726667,
+            "precision": 0.717949,
+            "recall": 0.746667,
+            "f1": 0.732026,
+            "roc_auc": 0.820444
+          }
+        },
+        "GaussianNaiveBayes": {
+          "result_type": "SYNTHETIC BENCHMARK RESULT",
+          "metrics": {
+            "accuracy": 0.7,
+            "precision": 0.6875,
+            "recall": 0.733333,
+            "f1": 0.709677,
+            "roc_auc": 0.782222
+          }
+        }
+      }
+    },
+    "C": {
+      "name": "IOC + correlation + threat context",
+      "feature_groups": [
+        "A_ioc_only",
+        "B_ioc_plus_observation_correlation",
+        "C_ioc_correlation_and_threat_context"
+      ],
+      "feature_count": 44,
+      "encoded_model_column_count": 47,
+      "models": {
+        "LogisticRegression": {
+          "result_type": "SYNTHETIC BENCHMARK RESULT",
+          "metrics": {
+            "accuracy": 0.9,
+            "precision": 0.875,
+            "recall": 0.933333,
+            "f1": 0.903226,
+            "roc_auc": 0.953956
+          }
+        },
+        "GaussianNaiveBayes": {
+          "result_type": "SYNTHETIC BENCHMARK RESULT",
+          "metrics": {
+            "accuracy": 0.846667,
+            "precision": 0.802326,
+            "recall": 0.92,
+            "f1": 0.857143,
+            "roc_auc": 0.935644
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "All reported metrics measure a controlled synthetic benchmark only.",
+    "They are not URLhaus performance, real-world threat detection performance, or evidence of improved CTI prioritization.",
+    "No real URLhaus target labels were used; all real URLhaus rows remain unknown."
+  ]
+}

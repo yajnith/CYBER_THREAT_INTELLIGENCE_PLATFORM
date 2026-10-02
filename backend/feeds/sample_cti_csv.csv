@@ -1,0 +1,3 @@
+indicator_type,value,source,threat_type,confidence,severity,tags
+domain,csv-demo-observable.example,csv_demo_alpha,phishing,78,high,"phishing;demo"
+domain,csv-demo-observable.example,csv_demo_beta,phishing,82,high,"phishing;demo"

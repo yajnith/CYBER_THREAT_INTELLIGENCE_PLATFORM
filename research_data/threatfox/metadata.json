@@ -9,7 +9,7 @@
   "collection_timestamp": null,
   "days_requested": null,
   "status": "not_collected",
-  "note": "No ThreatFox records are included or claimed. Run fetch.py after configuring a personal Auth-Key to acquire source data.",
+  "note": "THREATFOX_AUTH_KEY was not available in the current environment; no API request was made and no ThreatFox records are included or claimed.",
   "raw_record_count": null,
   "normalized_record_count": null,
   "malformed_record_count": null,

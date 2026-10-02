@@ -115,3 +115,44 @@ def test_feed_ingestion_rejects_paths_outside_feed_directory(api_db):
         ingestion_api.ingest_feed("../.env", api_db)
 
     assert error.value.status_code == 400
+
+
+def test_csv_feed_ingestion_deduplicates_and_creates_observations(
+    api_db, monkeypatch, tmp_path,
+):
+    token = uuid4().hex
+    value = f"csv-feed-{token}.example"
+    content = (
+        "indicator_type,value,source,threat_type,confidence,severity,tags\n"
+        f"domain,{value},csv_source_a,phishing,75,high,phishing;demo\n"
+        f"domain,{value},csv_source_b,phishing,80,high,phishing;demo\n"
+    )
+    (tmp_path / "csv_demo.csv").write_text(content, encoding="utf-8")
+    monkeypatch.setattr(ingestion_api, "FEED_DIR", tmp_path)
+    try:
+        first = ingestion_api.ingest_feed("csv_demo", api_db)
+        second = ingestion_api.ingest_feed("csv_demo", api_db)
+        assert first["source_file"] == "csv_demo.csv"
+        assert (first["records_processed"], first["new_iocs"], first["existing_iocs"], first["observations_created"]) == (2, 1, 1, 2)
+        assert (second["new_iocs"], second["existing_iocs"], second["observations_created"]) == (0, 2, 2)
+        db = SessionLocal()
+        try:
+            ioc = db.query(IOC).filter(IOC.normalized_value == value).one()
+            observations = db.query(IOCObservation).filter(IOCObservation.ioc_id == ioc.id).all()
+            assert {item.source for item in observations} == {"csv_source_a", "csv_source_b"}
+            assert len(observations) == 4
+        finally:
+            db.close()
+    finally:
+        remove_test_iocs([value])
+
+
+def test_csv_feed_ingestion_reports_invalid_row(api_db, monkeypatch, tmp_path):
+    (tmp_path / "invalid_csv.csv").write_text(
+        "indicator_type,value,source\ninvalid,not-an-ioc,csv_test\n", encoding="utf-8"
+    )
+    monkeypatch.setattr(ingestion_api, "FEED_DIR", tmp_path)
+    with pytest.raises(HTTPException) as error:
+        ingestion_api.ingest_feed("invalid_csv", api_db)
+    assert error.value.status_code == 422
+    assert "CSV line 2" in error.value.detail

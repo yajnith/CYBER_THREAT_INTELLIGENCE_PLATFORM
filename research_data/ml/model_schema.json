@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ctip.local/research/ml/model_schema.json",
+  "title": "CTIP Controlled Synthetic Benchmark and Baseline Results",
+  "description": "Contracts for pipeline-validation data/results; these are not real CTI labels or performance claims.",
+  "benchmark_metadata": {
+    "type": "object",
+    "required": ["dataset_type", "synthetic", "real_world_ground_truth", "derived_from_human_validated_urlhaus_labels", "random_seed", "row_count", "class_counts", "generation_logic"],
+    "properties": {
+      "dataset_type": {"const": "controlled_synthetic_benchmark"},
+      "synthetic": {"const": true},
+      "real_world_ground_truth": {"const": false},
+      "derived_from_human_validated_urlhaus_labels": {"const": false},
+      "random_seed": {"type": "integer"},
+      "row_count": {"type": "integer", "minimum": 4},
+      "class_counts": {
+        "type": "object",
+        "required": ["positive", "negative"],
+        "properties": {"positive": {"type": "integer", "minimum": 2}, "negative": {"type": "integer", "minimum": 2}}
+      },
+      "generation_logic": {"type": "string", "minLength": 1}
+    }
+  },
+  "benchmark_row": {
+    "type": "object",
+    "required": ["benchmark_row_id", "features", "target"],
+    "properties": {
+      "benchmark_row_id": {"type": "string"},
+      "features": {"type": "object", "description": "Only the selected existing A/B/C feature columns; no target or generation flag."},
+      "target": {"enum": ["positive", "negative"]}
+    },
+    "additionalProperties": false
+  },
+  "result_metadata": {
+    "type": "object",
+    "required": ["result_type", "dataset_type", "synthetic", "random_seed", "split_seed", "split_strategy", "benchmark_size", "class_counts", "train_size", "test_size", "models"],
+    "properties": {
+      "result_type": {"const": "SYNTHETIC BENCHMARK RESULT"},
+      "dataset_type": {"const": "controlled_synthetic_benchmark"},
+      "synthetic": {"const": true},
+      "real_world_ground_truth": {"const": false},
+      "derived_from_human_validated_urlhaus_labels": {"const": false},
+      "random_seed": {"type": "integer"},
+      "split_seed": {"type": "integer"},
+      "split_strategy": {"type": "string"},
+      "benchmark_size": {"type": "integer"},
+      "train_size": {"type": "integer"},
+      "test_size": {"type": "integer"},
+      "models": {"type": "array", "items": {"enum": ["LogisticRegression", "GaussianNaiveBayes"]}}
+    }
+  },
+  "metric_policy": {
+    "required": ["accuracy", "precision", "recall", "f1", "roc_auc"],
+    "range": [0, 1],
+    "interpretation": "Synthetic benchmark pipeline validation only; never URLhaus or real-world performance."
+  },
+  "leakage_policy": [
+    "target is outside features",
+    "no synthetic label-generation indicator is a feature",
+    "feature imputers/scalers/category vocabularies are fitted only on training rows",
+    "unknown real targets cannot be trained",
+    "URLhaus threat and deterministic risk_score do not define synthetic labels"
+  ],
+  "explanation_artifact": {
+    "artifact_type": "SYNTHETIC BENCHMARK EXPLANATION",
+    "required_interpretation": "Model behavior on the controlled synthetic benchmark only; no causal or real-world threat attribution claim.",
+    "methods": {
+      "LogisticRegression": "encoded feature value times learned coefficient; additive with intercept in log-odds space",
+      "GaussianNaiveBayes": "per-feature positive-vs-negative Gaussian log-likelihood ratio; additive with log prior odds"
+    },
+    "global_aggregation": "Mean absolute contribution and signed mean across held-out examples; ranked deterministically by mean absolute contribution.",
+    "local_selection": "First held-out row per predicted class in deterministic test order, independent of correctness or contribution size.",
+    "feature_groups": ["ioc_intrinsic", "observation", "correlation", "provenance_source", "threat_context"],
+    "causal_interpretation": false,
+    "shap_used": false,
+    "real_urlhaus_rows_explained": false
+  }
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function IOCSubmission() {
+function IOCSubmission({ onSubmitted }) {
   const [form, setForm] = useState({
     indicator_type: 'domain',
     value: '',
@@ -58,17 +58,24 @@ function IOCSubmission() {
         }
       )
 
-      const data = await response.json()
+      const data = await response.json().catch(() => ({}))
 
       if (!response.ok) {
-        throw new Error(
-          data.detail || 'Failed to submit IOC'
-        )
+        const detail = Array.isArray(data.detail)
+          ? data.detail.map((item) => item.msg || JSON.stringify(item)).join('; ')
+          : data.detail
+        throw new Error(typeof detail === 'string' ? detail : 'Failed to submit IOC')
+      }
+
+      if (!data?.ioc || typeof data.ioc.normalized_value !== 'string') {
+        throw new Error('The CTIP API returned an incomplete IOC submission response.')
       }
 
       setResult(data)
-
-      setMessage('IOC submitted successfully.')
+      setMessage(data.is_new
+        ? 'New IOC created and processed successfully.'
+        : 'Existing IOC matched; a new source observation was recorded.')
+      onSubmitted?.()
 
       setForm({
         indicator_type: 'domain',
@@ -80,7 +87,9 @@ function IOCSubmission() {
         tags: '',
       })
     } catch (err) {
-      setError(err.message)
+      setError(err instanceof TypeError
+        ? 'Could not reach the CTIP API. Check that the backend is running and try again.'
+        : err.message)
     } finally {
       setLoading(false)
     }
@@ -224,7 +233,7 @@ function IOCSubmission() {
             {result && (
               <>
                 <p>
-                  <strong>Risk Score:</strong>{' '}
+                  <strong>Deterministic CTIP Risk:</strong>{' '}
                   {result.risk_score}
                 </p>
 

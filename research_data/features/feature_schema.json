@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Deterministic research feature preparation. No target or model prediction is defined.",
+  "identity_fields": {
+    "entity_identity.ioc_type": "Typed IOC identity and categorical IOC feature.",
+    "entity_identity.normalized_ioc_value": "Entity join key only; not included as a raw text model feature."
+  },
+  "target_policy": {
+    "target_defined": false,
+    "row_target_value": null,
+    "urlhaus_threat_is_target": false,
+    "deterministic_risk_score_included": false,
+    "future_outcome_fields_included": false
+  },
+  "feature_groups": {
+    "A_ioc_only": {
+      "purpose": "Type-aware, value-derived IOC features only.",
+      "features": [
+        "ioc_type", "value_length", "type_ipv4", "type_ipv6", "type_domain", "type_url",
+        "type_hash_md5", "type_hash_sha1", "type_hash_sha256", "type_cve", "type_email",
+        "type_ip_port", "character_alpha_count", "character_digit_count",
+        "character_non_alphanumeric_count", "has_dot", "has_slash", "has_colon",
+        "has_hyphen", "has_at_sign"
+      ]
+    },
+    "B_ioc_plus_observation_correlation": {
+      "purpose": "Experiment A plus source/observation and reporter diversity features.",
+      "includes": ["A_ioc_only"],
+      "features": [
+        "observation_count", "distinct_source_count", "multi_source",
+        "source_diversity_ratio", "repeated_observation", "source_urlhaus",
+        "source_threatfox", "distinct_reporter_count"
+      ]
+    },
+    "C_ioc_correlation_and_threat_context": {
+      "purpose": "Experiment B plus observed threat context, confidence, and temporal features.",
+      "includes": ["B_ioc_plus_observation_correlation"],
+      "features": [
+        "distinct_threat_type_count", "distinct_malware_family_count",
+        "threat_context_available", "context_richness", "tag_count", "distinct_tag_count",
+        "confidence_available", "confidence_min", "confidence_max", "confidence_mean",
+        "confidence_source_count", "earliest_observation_timestamp",
+        "latest_observation_timestamp", "temporal_span_seconds", "temporal_coverage",
+        "observations_with_timestamps"
+      ]
+    }
+  },
+  "feature_columns": {
+    "ioc_type": {"type": "categorical", "group": "A", "nullable": false},
+    "value_length": {"type": "integer", "group": "A", "nullable": false},
+    "type_ipv4": {"type": "boolean", "group": "A", "nullable": false},
+    "type_ipv6": {"type": "boolean", "group": "A", "nullable": false},
+    "type_domain": {"type": "boolean", "group": "A", "nullable": false},
+    "type_url": {"type": "boolean", "group": "A", "nullable": false},
+    "type_hash_md5": {"type": "boolean", "group": "A", "nullable": false},
+    "type_hash_sha1": {"type": "boolean", "group": "A", "nullable": false},
+    "type_hash_sha256": {"type": "boolean", "group": "A", "nullable": false},
+    "type_cve": {"type": "boolean", "group": "A", "nullable": false},
+    "type_email": {"type": "boolean", "group": "A", "nullable": false},
+    "type_ip_port": {"type": "boolean", "group": "A", "nullable": false},
+    "character_alpha_count": {"type": "integer", "group": "A", "nullable": false},
+    "character_digit_count": {"type": "integer", "group": "A", "nullable": false},
+    "character_non_alphanumeric_count": {"type": "integer", "group": "A", "nullable": false},
+    "has_dot": {"type": "boolean", "group": "A", "nullable": false},
+    "has_slash": {"type": "boolean", "group": "A", "nullable": false},
+    "has_colon": {"type": "boolean", "group": "A", "nullable": false},
+    "has_hyphen": {"type": "boolean", "group": "A", "nullable": false},
+    "has_at_sign": {"type": "boolean", "group": "A", "nullable": false},
+    "observation_count": {"type": "integer", "group": "B", "nullable": false},
+    "distinct_source_count": {"type": "integer", "group": "B", "nullable": false},
+    "multi_source": {"type": "boolean", "group": "B", "nullable": false},
+    "source_diversity_ratio": {"type": "number", "group": "B", "nullable": false},
+    "repeated_observation": {"type": "boolean", "group": "B", "nullable": false},
+    "source_urlhaus": {"type": "boolean", "group": "B", "nullable": false},
+    "source_threatfox": {"type": "boolean", "group": "B", "nullable": false},
+    "distinct_reporter_count": {"type": "integer", "group": "B", "nullable": false},
+    "distinct_threat_type_count": {"type": "integer", "group": "C", "nullable": false},
+    "distinct_malware_family_count": {"type": "integer", "group": "C", "nullable": false},
+    "threat_context_available": {"type": "boolean", "group": "C", "nullable": false},
+    "context_richness": {"type": "integer", "group": "C", "nullable": false},
+    "tag_count": {"type": "integer", "group": "C", "nullable": false},
+    "distinct_tag_count": {"type": "integer", "group": "C", "nullable": false},
+    "confidence_available": {"type": "boolean", "group": "C", "nullable": false},
+    "confidence_min": {"type": "integer", "group": "C", "nullable": true},
+    "confidence_max": {"type": "integer", "group": "C", "nullable": true},
+    "confidence_mean": {"type": "number", "group": "C", "nullable": true},
+    "confidence_source_count": {"type": "integer", "group": "C", "nullable": false},
+    "earliest_observation_timestamp": {"type": "string", "format": "timestamp", "group": "C", "nullable": true},
+    "latest_observation_timestamp": {"type": "string", "format": "timestamp", "group": "C", "nullable": true},
+    "temporal_span_seconds": {"type": "number", "group": "C", "nullable": true},
+    "temporal_coverage": {"type": "boolean", "group": "C", "nullable": false},
+    "observations_with_timestamps": {"type": "integer", "group": "C", "nullable": false}
+  },
+  "row_contract": {
+    "entity_identity": ["ioc_type", "normalized_ioc_value"],
+    "features": "Exactly the feature_columns properties.",
+    "source_provenance": "Per-observation source, source_record_id, source_reference, and reporter; lineage to the full correlated input is retained.",
+    "raw_context_assertions": "Per-observation threat type, malware family, confidence, and tags; not a selected truth label.",
+    "target": "Always null/unassigned. No target is inferred or generated."
+  },
+  "leakage_controls": [
+    "Do not use URLhaus threat as a supervised target; current local data has one threat category.",
+    "No target/label or deterministic risk score is generated or included.",
+    "Future outcome/status fields are excluded from features.",
+    "Temporal summaries only use correlation-layer first_seen, last_seen, and observation_timestamp; URLhaus date_added and last_online are not relabeled as observation times.",
+    "Absolute time features require a documented prediction cutoff before any future experiment to avoid temporal leakage."
+  ]
+}

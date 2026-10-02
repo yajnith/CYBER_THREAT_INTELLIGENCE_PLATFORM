@@ -6,6 +6,8 @@ import app.database.models
 
 from app.api.iocs import router as ioc_router
 from app.api.ingestion import router as ingestion_router
+from app.api.research import router as research_router
+from app.api.analysis import router as analysis_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -31,6 +33,8 @@ app.add_middleware(
 
 app.include_router(ioc_router)
 app.include_router(ingestion_router)
+app.include_router(research_router)
+app.include_router(analysis_router)
 
 
 @app.get("/")

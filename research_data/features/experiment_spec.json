@@ -1,0 +1,146 @@
+{
+  "specification_version": "1.0",
+  "status": "target_preparation_implemented_no_real_labels_synthetic_baselines_and_explanations_only",
+  "research_question": "Does combining IOC evidence from multiple sources with contextual threat information improve threat prioritization?",
+  "prediction_task": {
+    "framing": "context-aware CTI threat prioritization",
+    "prediction_unit": "one entity identified by (ioc_type, normalized_ioc_value) at a documented index cutoff time t",
+    "proposed_future_outcome": "independent external adjudication that the IOC entity is associated with harmful activity during the 7 days after t",
+    "prediction_horizon_days": 7,
+    "positive_rule": "Assign positive only when an independent, timestamped validation source explicitly confirms harmful activity in (t, t + 7 days].",
+    "negative_rule": "Assign negative only when an independent validation process explicitly adjudicates the entity as non-harmful and has documented observation coverage through the full horizon.",
+    "unknown_rule": "Leave unlabeled/exclude from supervised evaluation when validation is absent, coverage is incomplete, evidence conflicts without adjudication, or the outcome time cannot be established.",
+    "status": "proposed_definition_only_outcome_data_unavailable"
+  },
+  "current_target": {
+    "status": "unavailable",
+    "statement": "Target not currently available.",
+    "selected_strategy": null,
+    "preferred_future_strategy": null,
+    "target_builder_status": "implemented_infrastructure_only_not_run_on_real_entities",
+    "target_schema_file": "research_data/targets/target_schema.json",
+    "target_builder_module": "research_data/targets/build_targets.py",
+    "reason": "The repository has no independent validated outcome labels or complete longitudinal outcome coverage. URLhaus threat is single-class; deterministic CTIP risk is a rule-based score; ThreatFox data has not been collected."
+  },
+  "target_candidates": [
+    {
+      "id": "source_reported_threat_type",
+      "represents": "A source's own threat taxonomy assertion, not an independently verified future outcome.",
+      "currently_available": true,
+      "current_evidence": "URLhaus threat is malware_download for all 14,354 local records.",
+      "supervised_suitability": "unsuitable_as_current_multiclass_target",
+      "leakage_risks": ["Single-class URLhaus target has no class discrimination.", "Using the same source assertion in Experiment C inputs and as the target would directly leak the answer."],
+      "additional_data_required": "A source with meaningful validated class variation and a target-source exclusion policy; class meanings and provenance must be documented."
+    },
+    {
+      "id": "deterministic_ctip_risk_level",
+      "represents": "The category produced by the existing deterministic severity/confidence scoring rule.",
+      "currently_available": true,
+      "current_evidence": "Production deterministic scoring exists, but its score is not present in the research feature rows.",
+      "supervised_suitability": "not_ground_truth",
+      "leakage_risks": ["The target would reproduce the rule rather than learn validated threat outcomes.", "Inputs used by the rule would leak into a model that is trained to copy the rule."],
+      "additional_data_required": "No data can make the rule itself ground truth; it may be reported only as a rule-based baseline/reference."
+    },
+    {
+      "id": "future_outcome",
+      "represents": "An independently observed harmful outcome occurring after an index cutoff.",
+      "currently_available": false,
+      "current_evidence": "No future/outcome labels or complete observation windows are stored in research_data/.",
+      "supervised_suitability": "potentially_suitable_if_prospectively_collected_and_independently_adjudicated",
+      "leakage_risks": ["Outcome data after the horizon must never enter features at cutoff t.", "Incomplete follow-up can turn unobserved positives into false negatives.", "Temporal overlap across splits can leak outcomes."],
+      "additional_data_required": "Timestamped independent adjudication, a declared 7-day horizon, documented coverage/censoring rules, and an as-of feature snapshot."
+    },
+    {
+      "id": "multi_source_consensus",
+      "represents": "Agreement or repeated reporting of an IOC by multiple CTI sources.",
+      "currently_available": false,
+      "current_evidence": "The real research run contains URLhaus only; no ThreatFox dataset or multi-source entities are available.",
+      "supervised_suitability": "not_independent_ground_truth_and_not_currently_available",
+      "leakage_risks": ["Consensus is directly derived from source-count and correlation features in Experiments B/C.", "The same source assertions cannot safely define both inputs and target."],
+      "additional_data_required": "Real multi-source observations can measure agreement, but an independent outcome source is still required for a validated target."
+    },
+    {
+      "id": "external_validated_label",
+      "represents": "An independent, documented adjudication of harmful or non-harmful status.",
+      "currently_available": false,
+      "current_evidence": "No external validated label dataset or adjudication workflow exists in the repository.",
+      "supervised_suitability": "potentially_suitable_if_provenance_time_and_coverage_are_validated",
+      "leakage_risks": ["The label provider's fields and post-cutoff updates must be excluded from model inputs.", "Incomplete label coverage must remain unknown rather than becoming negative."],
+      "additional_data_required": "A license-compatible authoritative label source, label definitions, adjudication timestamps, coverage documentation, and entity-level linkage."
+    }
+  ],
+  "leakage_policy": {
+    "allowed_inputs_by_experiment": {
+      "A": "IOC-only engineered features listed in research_data/features/feature_schema.json.",
+      "B": "A plus observations, source diversity, reporter counts, and correlation features available at cutoff t.",
+      "C": "B plus source-reported threat context, tags, confidence, and temporal summaries available at cutoff t, excluding any label-source assertions."
+    },
+    "always_exclude": [
+      "The target itself, target-source label fields, and fields that directly encode the adjudication.",
+      "Any event, status, report, or source update occurring after feature cutoff t.",
+      "URLhaus threat as a supervised target for the current single-class dataset.",
+      "Deterministic CTIP risk score/level as ground truth; it may only be a clearly named rule-based baseline.",
+      "Source consensus as a target when source-count/agreement features are model inputs.",
+      "Raw IOC text as an unreviewed model input; current schema retains it only as an entity join key and uses derived shape features."
+    ],
+    "source_reported_label_policy": "A source-reported label may not simultaneously be used as a target and as an input. If that source defines a future target, exclude its label assertion and direct derivatives from every experiment input.",
+    "temporal_policy": "Construct each feature row from evidence timestamped at or before t. Define label time in (t, t + 7 days]. URLhaus date_added and last_online are not treated as first_seen/last_seen; their role must be separately justified before any future use."
+  },
+  "evaluation_protocol": {
+    "status": "defined_for_future_data_only",
+    "primary_split": "Chronological train, validation, and held-out test periods using documented calendar cutoffs; cutoffs must be selected after outcome data availability is known, not invented from this unlabeled snapshot.",
+    "prediction_horizon_days": 7,
+    "embargo": "Purge at least the full 7-day outcome horizon at period boundaries so a training label window cannot overlap validation or test feature periods.",
+    "entity_grouping": "Group by (ioc_type, normalized_ioc_value) before splitting. One typed IOC identity and all of its repeated observations/source records may occur in only one partition. Cross-source duplicates must be resolved before the split.",
+    "duplicate_controls": ["Deduplicate/group exact typed identities before split assignment.", "Keep repeated observations and source record IDs for one entity in the same partition.", "Do not allow an entity's records or derived snapshots to straddle train, validation, and test."],
+    "source_leakage_controls": ["Exclude label-provider and target-source fields from inputs.", "Report per-source metrics when multiple sources exist.", "If sample size supports it, run a separate leave-one-source-out stress test; do not confuse it with the primary temporal evaluation."],
+    "preprocessing": "Fit imputers, encoders, feature selection, calibration, and any thresholds on training data only; use validation for model selection; evaluate the held-out test once.",
+    "metrics_to_report_if_labels_exist": ["Average precision/PR-AUC as a primary imbalance-aware metric", "Precision@K and Recall@K for analyst triage capacity", "ROC-AUC as a secondary metric", "Brier score and calibration plot for probability quality", "Per-IOC-type and per-source results where sample sizes permit"],
+    "current_evaluation_status": "Real-world supervised evaluation not run: no validated real target is available. Controlled synthetic baselines are pipeline-validation results only."
+  },
+  "experiments": {
+    "A": {
+      "name": "IOC-only",
+      "feature_groups": ["A_ioc_only"],
+      "target_requirement": "The same independent, timestamped future target and horizon must be available for A/B/C.",
+      "leakage_controls": ["No raw IOC text model input by default.", "Typed entity grouping and chronological cutoff apply.", "No source assertions or target-source label fields."],
+      "comparison_question": "Baseline predictive value of IOC type and derived IOC shape features."
+    },
+    "B": {
+      "name": "IOC + observation/correlation",
+      "feature_groups": ["A_ioc_only", "B_ioc_plus_observation_correlation"],
+      "target_requirement": "Exactly the same independent target, examples, cutoff, horizon, and split as A and C.",
+      "leakage_controls": ["Only observations available by cutoff t.", "Group repeated observations and cross-source duplicates by typed identity.", "Exclude any consensus-derived target."],
+      "comparison_question": "Incremental value of available observation counts, source diversity, and provenance over A."
+    },
+    "C": {
+      "name": "IOC + observation/correlation + threat context",
+      "feature_groups": ["A_ioc_only", "B_ioc_plus_observation_correlation", "C_ioc_correlation_and_threat_context"],
+      "target_requirement": "Exactly the same independent target, examples, cutoff, horizon, and split as A and B.",
+      "leakage_controls": ["Threat context must predate or be available at cutoff t.", "Exclude the label source's own target assertion and direct derivatives.", "Do not use URLhaus single-class threat as a target."],
+      "comparison_question": "Incremental value of non-target-source threat context over B."
+    }
+  },
+  "results": {
+    "target_builder_implemented": true,
+    "experiment_dataset_builder_implemented": true,
+    "experiment_dataset_module": "research_data/experiments/build_datasets.py",
+    "experiment_dataset_schema": "research_data/experiments/experiment_dataset_schema.json",
+    "experiment_dataset_profile": "research_data/experiments/urlhaus_experiment_profile.json",
+    "real_experiment_datasets_generated": true,
+    "real_experiment_targets_available": false,
+    "real_target_rows_generated": false,
+    "synthetic_baseline_pipeline_implemented": true,
+    "synthetic_baseline_results": "research_data/ml/synthetic_baseline_results.json",
+    "synthetic_benchmark": "research_data/ml/controlled_benchmark.json",
+    "synthetic_explanations_implemented": true,
+    "synthetic_explanation_artifact": "research_data/ml/explainability/synthetic_explanations.json",
+    "real_urlhaus_rows_explained": false,
+    "shap_used": false,
+    "real_urlhaus_model_trained": false,
+    "real_world_performance_metrics_calculated": false,
+    "model_trained": true,
+    "performance_metrics_calculated": true,
+    "interpretation": "The only trained models and calculated metrics use the explicitly marked controlled synthetic benchmark. No real URLhaus labels or real-world model performance results exist."
+  }
+}

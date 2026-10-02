@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
-from app.ingestion.service import ingest_json_feed
+from app.ingestion.service import ingest_feed as ingest_cti_feed
 
 
 router = APIRouter(
@@ -22,21 +22,22 @@ def ingest_feed(
     feed_id: str,
     db: Session = Depends(get_db),
 ):
-    """Ingest a named JSON feed from the project-local feeds directory."""
+    """Ingest a named JSON or CSV feed from the project-local feeds directory."""
     if not FEED_ID_PATTERN.fullmatch(feed_id):
         raise HTTPException(
             status_code=400,
             detail="Feed ID may contain only letters, numbers, '_' and '-'.",
         )
 
-    feed_path = (FEED_DIR / f"{feed_id}.json").resolve()
-    if feed_path.parent != FEED_DIR.resolve():
-        raise HTTPException(status_code=400, detail="Invalid feed path.")
-    if not feed_path.is_file():
+    feed_root = FEED_DIR.resolve()
+    # Preserve JSON as the default when both formats share a feed ID.
+    candidates = [(FEED_DIR / f"{feed_id}.json").resolve(), (FEED_DIR / f"{feed_id}.csv").resolve()]
+    feed_path = next((path for path in candidates if path.is_file() and path.parent == feed_root), None)
+    if feed_path is None:
         raise HTTPException(status_code=404, detail="CTI feed not found.")
 
     try:
-        summary = ingest_json_feed(feed_path, db)
+        summary = ingest_cti_feed(feed_path, db)
     except (ValueError, OSError) as error:
         raise HTTPException(
             status_code=422,

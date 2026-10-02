@@ -12,6 +12,10 @@ from app.scoring.risk_scorer import (
 )
 from app.services.ioc_correlation import get_ioc_correlation
 from app.services.ioc_service import process_ioc
+from app.services.attack_context import map_attack_style_context
+from app.services.cve_context import build_cve_context
+from app.services.recommendations import generate_mitigation_recommendations
+from app.api.research import build_investigation_research_context
 
 
 router = APIRouter(
@@ -59,6 +63,7 @@ def get_iocs(
             "created_at": record.created_at,
             "sources": correlation["sources"],
             "source_count": correlation["source_count"],
+            "observation_count": correlation["observation_count"],
             "risk_score": risk["final_deterministic_score"],
             "risk_level": risk["risk_level"],
         })
@@ -156,6 +161,26 @@ def get_ioc(
         record.severity,
         record.confidence,
     )
+    threat_type = getattr(record, "threat_type", None)
+    tags = getattr(record, "tags", None) or []
+    attack_context = map_attack_style_context(threat_type, tags)
+    cve_context = (
+        build_cve_context(record.normalized_value)
+        if record.indicator_type == "cve"
+        else None
+    )
+    recommendations = generate_mitigation_recommendations(
+        record.indicator_type,
+        record.normalized_value,
+        threat_type=threat_type,
+        severity=record.severity,
+        confidence=record.confidence,
+        risk_level=risk_level,
+        risk_score=risk_score,
+        tags=tags,
+        enrichment=enrichment,
+        source_count=correlation["source_count"],
+    )
 
     return {
         "ioc": record,
@@ -167,4 +192,8 @@ def get_ioc(
         "enrichment": enrichment,
         "observations": observations,
         "correlation": correlation,
+        "attack_context": attack_context,
+        "cve_context": cve_context,
+        "mitigation_recommendations": recommendations,
+        "research_context": build_investigation_research_context(),
     }

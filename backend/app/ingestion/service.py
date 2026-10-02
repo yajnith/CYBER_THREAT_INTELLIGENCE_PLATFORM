@@ -2,15 +2,15 @@ from pathlib import Path
 
 from sqlalchemy.orm import Session
 
-from app.ingestion.parsers import load_json_feed
+from app.ingestion.parsers import load_cti_feed
 from app.services.ioc_service import process_ioc
 
 
-def ingest_json_feed(
+def ingest_feed(
     file_path: str | Path,
     db: Session,
 ) -> dict:
-    records = load_json_feed(file_path)
+    records = load_cti_feed(file_path)
 
     results = []
     new_ioc_count = 0
@@ -29,3 +29,8 @@ def ingest_json_feed(
         "errors": [],
         "results": results,
     }
+
+
+def ingest_json_feed(file_path: str | Path, db: Session) -> dict:
+    """Backward-compatible name for callers of the original JSON workflow."""
+    return ingest_feed(file_path, db)

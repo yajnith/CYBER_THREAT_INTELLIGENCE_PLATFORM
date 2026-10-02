@@ -1,0 +1,107 @@
+{
+  "status": "completed",
+  "dataset_scope": "URLhaus feature snapshot joined to independent target rows when present",
+  "feature_input": "research_data/urlhaus/urlhaus_research_features.json",
+  "feature_input_sha256": "4b46058baebdda9928cfbdd2678909f130ef2609d91a03e531be6101883fc90c",
+  "target_input": null,
+  "target_input_sha256": null,
+  "target_input_available": false,
+  "feature_schema": "research_data/features/feature_schema.json",
+  "experiment_spec": "research_data/features/experiment_spec.json",
+  "target_schema": "research_data/targets/target_schema.json",
+  "dataset_schema": "research_data/experiments/experiment_dataset_schema.json",
+  "outputs": {
+    "A": {
+      "path": "research_data/urlhaus/urlhaus_experiment_A.json",
+      "sha256": "6e5c98d28152095259b1dffc129748b832064c16f9b5d34cc31ef035d1e6a279"
+    },
+    "B": {
+      "path": "research_data/urlhaus/urlhaus_experiment_B.json",
+      "sha256": "4bbcbde288353fae88e2d0b4a30a56a1423d7dcd6bcc5adf6fef629a8b3bedf4"
+    },
+    "C": {
+      "path": "research_data/urlhaus/urlhaus_experiment_C.json",
+      "sha256": "2e559269ee1bebd006ee80d948d1e8acd97ebf51d6b1e63dc821ca5a79400184"
+    }
+  },
+  "statistics": {
+    "entity_identity": [
+      "ioc_type",
+      "normalized_ioc_value"
+    ],
+    "input_feature_row_count": 14354,
+    "unique_feature_identity_count": 14354,
+    "input_target_row_count": 0,
+    "unique_target_identity_count": 0,
+    "unmatched_target_identity_count": 0,
+    "unmatched_target_identities": [],
+    "experiment_feature_counts": {
+      "A": 20,
+      "B": 28,
+      "C": 44
+    },
+    "experiment_row_counts": {
+      "A": 14354,
+      "B": 14354,
+      "C": 14354
+    },
+    "feature_source_row_coverage": {
+      "urlhaus": 14354
+    },
+    "feature_source_observation_coverage": {
+      "urlhaus": 14354
+    },
+    "target_counts_per_experiment": {
+      "A": {
+        "positive": 0,
+        "negative": 0,
+        "unknown": 14354
+      },
+      "B": {
+        "positive": 0,
+        "negative": 0,
+        "unknown": 14354
+      },
+      "C": {
+        "positive": 0,
+        "negative": 0,
+        "unknown": 14354
+      }
+    },
+    "labeled_count_per_experiment": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "unlabeled_count_per_experiment": {
+      "A": 14354,
+      "B": 14354,
+      "C": 14354
+    },
+    "class_balance_per_experiment": {
+      "A": {
+        "positive": 0,
+        "negative": 0,
+        "unknown": 14354,
+        "labeled_positive_fraction": null
+      },
+      "B": {
+        "positive": 0,
+        "negative": 0,
+        "unknown": 14354,
+        "labeled_positive_fraction": null
+      },
+      "C": {
+        "positive": 0,
+        "negative": 0,
+        "unknown": 14354,
+        "labeled_positive_fraction": null
+      }
+    },
+    "feature_source_record_count": 14354,
+    "target_source_record_count": 0,
+    "model_trained": false,
+    "metrics_calculated": false
+  },
+  "interpretation": "Dataset assembly only. Unknown means no qualifying target row was supplied; it is not a negative label. No model or performance result was generated."
+}

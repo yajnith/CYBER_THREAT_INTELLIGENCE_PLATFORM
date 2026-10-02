@@ -1,7 +1,7 @@
 [
   {
     "indicator_type": "domain",
-    "value": "malicious-example.com",
+    "value": "malicious-example.example",
     "source": "sample_feed_alpha",
     "threat_type": "command_and_control",
     "confidence": 90,
@@ -19,12 +19,21 @@
   },
   {
     "indicator_type": "url",
-    "value": "https://malicious-example.com/login",
+    "value": "https://malicious-example.example/login",
     "source": "sample_feed_beta",
     "threat_type": "phishing",
     "confidence": 80,
     "severity": "medium",
     "tags": ["phishing", "credential_theft"]
+  },
+  {
+    "indicator_type": "domain",
+    "value": "malicious-example.example",
+    "source": "sample_feed_beta",
+    "threat_type": "command_and_control",
+    "confidence": 88,
+    "severity": "high",
+    "tags": ["c2", "malware"]
   },
   {
     "indicator_type": "hash_sha256",

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ctip.local/research/targets/target_schema.json",
+  "title": "CTIP Future Outcome Target Contract",
+  "description": "Combined input assertion/output target schema. No real outcome rows are currently available.",
+  "oneOf": [
+    {"$ref": "#/outcome_assertion"},
+    {"$ref": "#/target_row"}
+  ],
+  "prediction_horizon_days": 7,
+  "identity_key": ["ioc_type", "normalized_ioc_value"],
+  "outcome_assertion": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["assertion_id", "ioc_type", "normalized_ioc_value", "outcome_status", "independent_validation", "source"],
+    "properties": {
+      "assertion_id": {"type": "string", "minLength": 1},
+      "ioc_type": {"$ref": "#/$defs/iocType"},
+      "normalized_ioc_value": {"type": "string", "minLength": 1},
+      "outcome_status": {"enum": ["confirmed_harmful", "adjudicated_non_harmful"]},
+      "independent_validation": {"type": "boolean", "description": "Only true, independently validated assertions can contribute to a label; false assertions may be retained but are ignored for target decisions."},
+      "source": {"type": "string", "minLength": 1},
+      "source_record_id": {"type": ["string", "null"]},
+      "source_reference": {"type": ["string", "null"]},
+      "confirmation_timestamp": {"type": ["string", "null"], "format": "date-time"},
+      "adjudication_timestamp": {"type": ["string", "null"], "format": "date-time"},
+      "coverage_through": {"type": ["string", "null"], "format": "date-time"},
+      "supersedes_assertion_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+    },
+    "allOf": [
+      {
+        "if": {"properties": {"outcome_status": {"const": "confirmed_harmful"}}, "required": ["outcome_status"]},
+        "then": {"required": ["confirmation_timestamp"], "properties": {"confirmation_timestamp": {"type": "string", "format": "date-time"}, "adjudication_timestamp": {"type": "null"}}}
+      },
+      {
+        "if": {"properties": {"outcome_status": {"const": "adjudicated_non_harmful"}}, "required": ["outcome_status"]},
+        "then": {"required": ["adjudication_timestamp"], "properties": {"adjudication_timestamp": {"type": "string", "format": "date-time"}, "confirmation_timestamp": {"type": "null"}}}
+      }
+    ]
+  },
+  "target_row": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["schema_version", "entity_identity", "prediction_window", "target", "target_reason", "assertion_conflict_detected", "conflict_resolution", "evidence_count", "outcome_evidence"],
+    "properties": {
+      "schema_version": {"const": "1.0"},
+      "entity_identity": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ioc_type", "normalized_ioc_value"],
+        "properties": {
+          "ioc_type": {"$ref": "#/$defs/iocType"},
+          "normalized_ioc_value": {"type": "string", "minLength": 1}
+        }
+      },
+      "prediction_window": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cutoff_at", "horizon_end", "horizon_days"],
+        "properties": {
+          "cutoff_at": {"type": "string", "format": "date-time"},
+          "horizon_end": {"type": "string", "format": "date-time"},
+          "horizon_days": {"const": 7}
+        }
+      },
+      "target": {"enum": ["positive", "negative", "unknown"]},
+      "target_reason": {"type": "string"},
+      "assertion_conflict_detected": {"type": "boolean"},
+      "conflict_resolution": {"type": ["string", "null"]},
+      "evidence_count": {"type": "integer", "minimum": 0},
+      "outcome_evidence": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["assertion_id", "ioc_type", "normalized_ioc_value", "outcome_status", "independent_validation", "source", "considered_for_target", "decision_reason", "superseded_by_explicit_adjudication"],
+          "properties": {
+            "assertion_id": {"type": "string"},
+            "ioc_type": {"$ref": "#/$defs/iocType"},
+            "normalized_ioc_value": {"type": "string"},
+            "outcome_status": {"enum": ["confirmed_harmful", "adjudicated_non_harmful"]},
+            "independent_validation": {"type": "boolean"},
+            "source": {"type": "string"},
+            "source_record_id": {"type": ["string", "null"]},
+            "source_reference": {"type": ["string", "null"]},
+            "confirmation_timestamp": {"type": ["string", "null"], "format": "date-time"},
+            "adjudication_timestamp": {"type": ["string", "null"], "format": "date-time"},
+            "coverage_through": {"type": ["string", "null"], "format": "date-time"},
+            "supersedes_assertion_ids": {"type": "array", "items": {"type": "string"}},
+            "considered_for_target": {"type": "boolean"},
+            "decision_reason": {"type": "string"},
+            "superseded_by_explicit_adjudication": {"type": "boolean"}
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "iocType": {
+      "type": "string",
+      "enum": ["ipv4", "ipv6", "domain", "url", "hash_md5", "hash_sha1", "hash_sha256", "cve", "email", "ip:port"]
+    }
+  },
+  "label_rules": {
+    "positive": "At least one independent confirmed_harmful assertion has confirmation_timestamp in (cutoff_at, cutoff_at + 7 days], and there is no unresolved conflicting adjudication.",
+    "negative": "At least one independent adjudicated_non_harmful assertion exists, coverage_through is at or beyond cutoff_at + 7 days, and there is no unresolved conflicting adjudication.",
+    "unknown": "No qualifying assertion, incomplete coverage, non-independent-only evidence, unresolved conflicting assertions, or other insufficient evidence. Unknown is never converted to negative.",
+    "conflict": "Contradictory qualifying assertions are unknown unless an independent candidate assertion explicitly supersedes the conflicting assertion IDs; all assertions remain preserved in evidence."
+  },
+  "invariants": [
+    "Entity identities and outcomes are matched only by (ioc_type, normalized_ioc_value).",
+    "Confirmation timestamps at or before cutoff are not future positives.",
+    "A target row is emitted once per distinct typed entity identity regardless of repeated observations.",
+    "Target rows contain no model features; outcome assertions are separate from feature inputs.",
+    "Output ordering and evidence ordering are deterministic."
+  ]
+}

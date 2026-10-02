@@ -1,0 +1,3374 @@
+{
+  "metadata": {
+    "artifact_type": "SYNTHETIC BENCHMARK EXPLANATION",
+    "explanation_version": "ctip_feature_contributions_v1",
+    "dataset_type": "controlled_synthetic_benchmark",
+    "synthetic": true,
+    "real_world_ground_truth": false,
+    "derived_from_human_validated_urlhaus_labels": false,
+    "benchmark_size": 600,
+    "class_counts": {
+      "positive": 300,
+      "negative": 300
+    },
+    "benchmark_seed": 8137,
+    "split_seed": 2026,
+    "split_strategy": "same deterministic stratified 75/25 split as train_baselines.py",
+    "train_size": 450,
+    "test_size": 150,
+    "models": [
+      "LogisticRegression",
+      "GaussianNaiveBayes"
+    ],
+    "feature_values_are_encoded": true,
+    "model_feature_importance_is_causal": false,
+    "real_urlhaus_rows_explained": false,
+    "local_example_selection": "For each experiment/model, take the first held-out row in deterministic split order for each predicted class; selection does not depend on correctness or contribution magnitude.",
+    "interpretation": "Explanations describe model behavior on this controlled synthetic benchmark only. They do not establish causal relationships or real-world threat attribution."
+  },
+  "experiments": {
+    "A": {
+      "name": "IOC-only",
+      "feature_count": 20,
+      "encoded_feature_count": 23,
+      "feature_groups_included": [
+        "ioc_intrinsic"
+      ],
+      "models": {
+        "LogisticRegression": {
+          "attribution_method": "encoded feature value × learned coefficient; local contributions add to the intercept in log-odds space",
+          "contribution_direction": "positive values push toward the positive class; negative values push toward the negative class",
+          "local_explanations": [
+            {
+              "benchmark_row_id": "SYN-00001",
+              "actual_target": "positive",
+              "predicted_class": "positive",
+              "positive_class_probability": 0.92614735,
+              "base_log_odds": 0.02150575,
+              "sum_feature_contributions": 2.507455712,
+              "reconstructed_log_odds": 2.528961462,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.083934548,
+                  "contribution": 1.089960584
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.097356731,
+                  "contribution": 0.950648403
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 3.003741029,
+                  "contribution": 0.140062747
+                },
+                {
+                  "feature": "has_hyphen",
+                  "source_feature": "has_hyphen",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.480367982,
+                  "contribution": 0.106393665
+                },
+                {
+                  "feature": "has_colon",
+                  "source_feature": "has_colon",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.054567816
+                },
+                {
+                  "feature": "has_slash",
+                  "source_feature": "has_slash",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.054567816
+                },
+                {
+                  "feature": "type_url",
+                  "source_feature": "type_url",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.054567816
+                },
+                {
+                  "feature": "ioc_type=url",
+                  "source_feature": "ioc_type",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.0,
+                  "contribution": 0.032802151
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "type_hash_sha256",
+                  "source_feature": "type_hash_sha256",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.373149442,
+                  "contribution": -0.014609045
+                },
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.050436965,
+                  "contribution": -0.011382879
+                }
+              ],
+              "feature_group_contributions": {
+                "ioc_intrinsic": {
+                  "absolute_sum": 2.559439557,
+                  "signed_sum": 2.507455709
+                }
+              }
+            },
+            {
+              "benchmark_row_id": "SYN-00024",
+              "actual_target": "positive",
+              "predicted_class": "negative",
+              "positive_class_probability": 0.454921732,
+              "base_log_odds": 0.02150575,
+              "sum_feature_contributions": -0.202309758,
+              "reconstructed_log_odds": -0.180804008,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.20537839,
+                  "contribution": 0.093089857
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.310811302,
+                  "contribution": 0.061122391
+                },
+                {
+                  "feature": "type_ipv4",
+                  "source_feature": "type_ipv4",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.496525323,
+                  "contribution": 0.018096446
+                },
+                {
+                  "feature": "has_dot",
+                  "source_feature": "has_dot",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.685994341,
+                  "contribution": 0.002490995
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "type_domain",
+                  "source_feature": "type_domain",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.768739768,
+                  "contribution": -0.091629498
+                },
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.126585326,
+                  "contribution": -0.066207941
+                },
+                {
+                  "feature": "has_hyphen",
+                  "source_feature": "has_hyphen",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.67550772,
+                  "contribution": -0.048548565
+                },
+                {
+                  "feature": "has_colon",
+                  "source_feature": "has_colon",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.88241494,
+                  "contribution": -0.042489565
+                },
+                {
+                  "feature": "has_slash",
+                  "source_feature": "has_slash",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.88241494,
+                  "contribution": -0.042489565
+                },
+                {
+                  "feature": "type_url",
+                  "source_feature": "type_url",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.88241494,
+                  "contribution": -0.042489565
+                },
+                {
+                  "feature": "ioc_type=domain",
+                  "source_feature": "ioc_type",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.0,
+                  "contribution": -0.017262825
+                },
+                {
+                  "feature": "type_hash_sha256",
+                  "source_feature": "type_hash_sha256",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.373149442,
+                  "contribution": -0.014609045
+                }
+              ],
+              "feature_group_contributions": {
+                "ioc_intrinsic": {
+                  "absolute_sum": 0.551909137,
+                  "signed_sum": -0.202309759
+                }
+              }
+            }
+          ],
+          "global_model_feature_contribution": {
+            "aggregation": "mean and sum of absolute per-example log-odds contribution; signed mean is also reported",
+            "features_ranked_by_mean_absolute_contribution": [
+              {
+                "feature": "character_alpha_count",
+                "source_feature": "character_alpha_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 54.336956131,
+                "mean_absolute_contribution": 0.362246374,
+                "mean_signed_contribution": 0.02539618
+              },
+              {
+                "feature": "value_length",
+                "source_feature": "value_length",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 47.273593409,
+                "mean_absolute_contribution": 0.315157289,
+                "mean_signed_contribution": 0.021540023
+              },
+              {
+                "feature": "character_non_alphanumeric_count",
+                "source_feature": "character_non_alphanumeric_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 27.222335219,
+                "mean_absolute_contribution": 0.181482235,
+                "mean_signed_contribution": -0.017908095
+              },
+              {
+                "feature": "has_hyphen",
+                "source_feature": "has_hyphen",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 9.885314265,
+                "mean_absolute_contribution": 0.065902095,
+                "mean_signed_contribution": -0.002065896
+              },
+              {
+                "feature": "has_colon",
+                "source_feature": "has_colon",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 7.230990574,
+                "mean_absolute_contribution": 0.048206604,
+                "mean_signed_contribution": 0.003450929
+              },
+              {
+                "feature": "has_slash",
+                "source_feature": "has_slash",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 7.230990574,
+                "mean_absolute_contribution": 0.048206604,
+                "mean_signed_contribution": 0.003450929
+              },
+              {
+                "feature": "type_url",
+                "source_feature": "type_url",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 7.230990574,
+                "mean_absolute_contribution": 0.048206604,
+                "mean_signed_contribution": 0.003450929
+              },
+              {
+                "feature": "type_domain",
+                "source_feature": "type_domain",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 6.949331632,
+                "mean_absolute_contribution": 0.046328878,
+                "mean_signed_contribution": -0.003761915
+              },
+              {
+                "feature": "character_digit_count",
+                "source_feature": "character_digit_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 5.776178677,
+                "mean_absolute_contribution": 0.038507858,
+                "mean_signed_contribution": 0.009096936
+              },
+              {
+                "feature": "type_ipv4",
+                "source_feature": "type_ipv4",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 3.820586842,
+                "mean_absolute_contribution": 0.025470579,
+                "mean_signed_contribution": 0.005896595
+              },
+              {
+                "feature": "type_hash_sha256",
+                "source_feature": "type_hash_sha256",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 3.816944944,
+                "mean_absolute_contribution": 0.0254463,
+                "mean_signed_contribution": -0.000265619
+              },
+              {
+                "feature": "ioc_type=url",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 2.328952711,
+                "mean_absolute_contribution": 0.015526351,
+                "mean_signed_contribution": 0.015526351
+              },
+              {
+                "feature": "ioc_type=domain",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.707775827,
+                "mean_absolute_contribution": 0.004718506,
+                "mean_signed_contribution": -0.004718506
+              },
+              {
+                "feature": "has_dot",
+                "source_feature": "has_dot",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.480139321,
+                "mean_absolute_contribution": 0.003200929,
+                "mean_signed_contribution": 0.000518957
+              },
+              {
+                "feature": "ioc_type=hash_sha256",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.275617006,
+                "mean_absolute_contribution": 0.001837447,
+                "mean_signed_contribution": 0.001837447
+              },
+              {
+                "feature": "ioc_type=ipv4",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.209808543,
+                "mean_absolute_contribution": 0.001398724,
+                "mean_signed_contribution": -0.001398724
+              },
+              {
+                "feature": "has_at_sign",
+                "source_feature": "has_at_sign",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_cve",
+                "source_feature": "type_cve",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_email",
+                "source_feature": "type_email",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_md5",
+                "source_feature": "type_hash_md5",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_sha1",
+                "source_feature": "type_hash_sha1",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ip_port",
+                "source_feature": "type_ip_port",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ipv6",
+                "source_feature": "type_ipv6",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              }
+            ]
+          },
+          "feature_group_contribution": {
+            "aggregation": "mean absolute and signed sum of feature log-odds contributions per held-out example; also normalized by encoded group width",
+            "groups": {
+              "ioc_intrinsic": {
+                "encoded_feature_count": 23,
+                "mean_absolute_contribution_per_example": 1.231843375,
+                "mean_absolute_contribution_per_feature_per_example": 0.053558408,
+                "mean_signed_contribution_per_example": 0.060046522
+              }
+            }
+          }
+        },
+        "GaussianNaiveBayes": {
+          "attribution_method": "per-feature Gaussian log-likelihood ratio log p(x_j|positive) - log p(x_j|negative); contributions add to log prior odds",
+          "contribution_direction": "positive values push toward the positive class; negative values push toward the negative class",
+          "local_explanations": [
+            {
+              "benchmark_row_id": "SYN-00001",
+              "actual_target": "positive",
+              "predicted_class": "positive",
+              "positive_class_probability": 0.999996331,
+              "base_log_odds": 0.0,
+              "sum_feature_contributions": 12.515529025,
+              "reconstructed_log_odds": 12.515529025,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 3.003741029,
+                  "contribution": 4.166510876
+                },
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.083934548,
+                  "contribution": 3.663016417
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.097356731,
+                  "contribution": 3.337365005
+                },
+                {
+                  "feature": "has_colon",
+                  "source_feature": "has_colon",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.200871324
+                },
+                {
+                  "feature": "has_slash",
+                  "source_feature": "has_slash",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.200871324
+                },
+                {
+                  "feature": "ioc_type=url",
+                  "source_feature": "ioc_type",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.0,
+                  "contribution": 0.200871324
+                },
+                {
+                  "feature": "type_url",
+                  "source_feature": "type_url",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.200871324
+                },
+                {
+                  "feature": "has_hyphen",
+                  "source_feature": "has_hyphen",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.480367982,
+                  "contribution": 0.131805569
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.050436965,
+                  "contribution": -0.208123183
+                }
+              ],
+              "feature_group_contributions": {
+                "ioc_intrinsic": {
+                  "absolute_sum": 12.93177539,
+                  "signed_sum": 12.515529024
+                }
+              }
+            },
+            {
+              "benchmark_row_id": "SYN-00025",
+              "actual_target": "negative",
+              "predicted_class": "negative",
+              "positive_class_probability": 0.224296,
+              "base_log_odds": 0.0,
+              "sum_feature_contributions": -1.240804397,
+              "reconstructed_log_odds": -1.240804397,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.816950333,
+                  "contribution": 0.436995773
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.585269991,
+                  "contribution": 0.219104634
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.262711067,
+                  "contribution": 0.159492435
+                },
+                {
+                  "feature": "ioc_type=hash_sha256",
+                  "source_feature": "ioc_type",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.0,
+                  "contribution": 0.092924951
+                },
+                {
+                  "feature": "type_hash_sha256",
+                  "source_feature": "type_hash_sha256",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.373149442,
+                  "contribution": 0.092924951
+                },
+                {
+                  "feature": "ioc_type=domain",
+                  "source_feature": "ioc_type",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.0,
+                  "contribution": 0.050593807
+                },
+                {
+                  "feature": "type_domain",
+                  "source_feature": "type_domain",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.565374295,
+                  "contribution": 0.050593807
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.296625316,
+                  "contribution": -0.524974035
+                },
+                {
+                  "feature": "ioc_type=ipv4",
+                  "source_feature": "ioc_type",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.0,
+                  "contribution": -0.440047126
+                },
+                {
+                  "feature": "type_ipv4",
+                  "source_feature": "type_ipv4",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.013995972,
+                  "contribution": -0.440047126
+                },
+                {
+                  "feature": "has_dot",
+                  "source_feature": "has_dot",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -1.457737974,
+                  "contribution": -0.254971903
+                },
+                {
+                  "feature": "has_colon",
+                  "source_feature": "has_colon",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.88241494,
+                  "contribution": -0.155839532
+                },
+                {
+                  "feature": "has_slash",
+                  "source_feature": "has_slash",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.88241494,
+                  "contribution": -0.155839532
+                },
+                {
+                  "feature": "ioc_type=url",
+                  "source_feature": "ioc_type",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.0,
+                  "contribution": -0.155839532
+                },
+                {
+                  "feature": "type_url",
+                  "source_feature": "type_url",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.88241494,
+                  "contribution": -0.155839532
+                }
+              ],
+              "feature_group_contributions": {
+                "ioc_intrinsic": {
+                  "absolute_sum": 3.446065111,
+                  "signed_sum": -1.240804395
+                }
+              }
+            }
+          ],
+          "global_model_feature_contribution": {
+            "aggregation": "mean and sum of absolute per-example log-odds contribution; signed mean is also reported",
+            "features_ranked_by_mean_absolute_contribution": [
+              {
+                "feature": "character_alpha_count",
+                "source_feature": "character_alpha_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 125.377248991,
+                "mean_absolute_contribution": 0.835848327,
+                "mean_signed_contribution": 0.113559455
+              },
+              {
+                "feature": "value_length",
+                "source_feature": "value_length",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 118.013115581,
+                "mean_absolute_contribution": 0.786754104,
+                "mean_signed_contribution": 0.088791296
+              },
+              {
+                "feature": "character_digit_count",
+                "source_feature": "character_digit_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 102.25185831,
+                "mean_absolute_contribution": 0.681679055,
+                "mean_signed_contribution": 0.189614136
+              },
+              {
+                "feature": "character_non_alphanumeric_count",
+                "source_feature": "character_non_alphanumeric_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 76.557966938,
+                "mean_absolute_contribution": 0.510386446,
+                "mean_signed_contribution": -0.034729025
+              },
+              {
+                "feature": "has_colon",
+                "source_feature": "has_colon",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "has_slash",
+                "source_feature": "has_slash",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "ioc_type=url",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "type_url",
+                "source_feature": "type_url",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "ioc_type=hash_sha256",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 24.353059836,
+                "mean_absolute_contribution": 0.162353732,
+                "mean_signed_contribution": 0.001194182
+              },
+              {
+                "feature": "type_hash_sha256",
+                "source_feature": "type_hash_sha256",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 24.353059836,
+                "mean_absolute_contribution": 0.162353732,
+                "mean_signed_contribution": 0.001194182
+              },
+              {
+                "feature": "has_dot",
+                "source_feature": "has_dot",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 23.035931976,
+                "mean_absolute_contribution": 0.15357288,
+                "mean_signed_contribution": 0.024387115
+              },
+              {
+                "feature": "ioc_type=ipv4",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 22.792965276,
+                "mean_absolute_contribution": 0.151953102,
+                "mean_signed_contribution": 0.034607202
+              },
+              {
+                "feature": "type_ipv4",
+                "source_feature": "type_ipv4",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 22.792965276,
+                "mean_absolute_contribution": 0.151953102,
+                "mean_signed_contribution": 0.034607202
+              },
+              {
+                "feature": "has_hyphen",
+                "source_feature": "has_hyphen",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.235076252,
+                "mean_absolute_contribution": 0.081567175,
+                "mean_signed_contribution": -0.002483834
+              },
+              {
+                "feature": "ioc_type=domain",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.014756745,
+                "mean_absolute_contribution": 0.080098378,
+                "mean_signed_contribution": -0.006568712
+              },
+              {
+                "feature": "type_domain",
+                "source_feature": "type_domain",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.014756745,
+                "mean_absolute_contribution": 0.080098378,
+                "mean_signed_contribution": -0.006568712
+              },
+              {
+                "feature": "has_at_sign",
+                "source_feature": "has_at_sign",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_cve",
+                "source_feature": "type_cve",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_email",
+                "source_feature": "type_email",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_md5",
+                "source_feature": "type_hash_md5",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_sha1",
+                "source_feature": "type_hash_sha1",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ip_port",
+                "source_feature": "type_ip_port",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ipv6",
+                "source_feature": "type_ipv6",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              }
+            ]
+          },
+          "feature_group_contribution": {
+            "aggregation": "mean absolute and signed sum of feature log-odds contributions per held-out example; also normalized by encoded group width",
+            "groups": {
+              "ioc_intrinsic": {
+                "encoded_feature_count": 23,
+                "mean_absolute_contribution_per_example": 4.547236733,
+                "mean_absolute_contribution_per_feature_per_example": 0.197705945,
+                "mean_signed_contribution_per_example": 0.489618912
+              }
+            }
+          }
+        }
+      }
+    },
+    "B": {
+      "name": "IOC + observation/correlation",
+      "feature_count": 28,
+      "encoded_feature_count": 31,
+      "feature_groups_included": [
+        "correlation",
+        "ioc_intrinsic",
+        "observation",
+        "provenance_source"
+      ],
+      "models": {
+        "LogisticRegression": {
+          "attribution_method": "encoded feature value × learned coefficient; local contributions add to the intercept in log-odds space",
+          "contribution_direction": "positive values push toward the positive class; negative values push toward the negative class",
+          "local_explanations": [
+            {
+              "benchmark_row_id": "SYN-00001",
+              "actual_target": "positive",
+              "predicted_class": "positive",
+              "positive_class_probability": 0.991871924,
+              "base_log_odds": 0.042981399,
+              "sum_feature_contributions": 4.761288353,
+              "reconstructed_log_odds": 4.804269752,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "distinct_reporter_count",
+                  "source_feature": "distinct_reporter_count",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": 2.176536666,
+                  "contribution": 1.479041246
+                },
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.083934548,
+                  "contribution": 1.090312224
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.097356731,
+                  "contribution": 0.907705247
+                },
+                {
+                  "feature": "observation_count",
+                  "source_feature": "observation_count",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 1.548401786,
+                  "contribution": 0.461765568
+                },
+                {
+                  "feature": "source_diversity_ratio",
+                  "source_feature": "source_diversity_ratio",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -1.455215927,
+                  "contribution": 0.334947004
+                },
+                {
+                  "feature": "repeated_observation",
+                  "source_feature": "repeated_observation",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 0.797724035,
+                  "contribution": 0.19434417
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 3.003741029,
+                  "contribution": 0.079968069
+                },
+                {
+                  "feature": "has_colon",
+                  "source_feature": "has_colon",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.073092694
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "distinct_source_count",
+                  "source_feature": "distinct_source_count",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.056252279
+                },
+                {
+                  "feature": "multi_source",
+                  "source_feature": "multi_source",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.056252279
+                },
+                {
+                  "feature": "source_threatfox",
+                  "source_feature": "source_threatfox",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.056252279
+                },
+                {
+                  "feature": "type_hash_sha256",
+                  "source_feature": "type_hash_sha256",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.373149442,
+                  "contribution": -0.018906366
+                },
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.050436965,
+                  "contribution": -0.009367647
+                }
+              ],
+              "feature_group_contributions": {
+                "correlation": {
+                  "absolute_sum": 0.447451562,
+                  "signed_sum": 0.222442446
+                },
+                "ioc_intrinsic": {
+                  "absolute_sum": 2.51649523,
+                  "signed_sum": 2.459947204
+                },
+                "observation": {
+                  "absolute_sum": 0.656109738,
+                  "signed_sum": 0.656109738
+                },
+                "provenance_source": {
+                  "absolute_sum": 1.535293525,
+                  "signed_sum": 1.422788967
+                }
+              }
+            },
+            {
+              "benchmark_row_id": "SYN-00024",
+              "actual_target": "positive",
+              "predicted_class": "negative",
+              "positive_class_probability": 0.213956744,
+              "base_log_odds": 0.042981399,
+              "sum_feature_contributions": -1.344219361,
+              "reconstructed_log_odds": -1.301237962,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.20537839,
+                  "contribution": 0.088884756
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.310811302,
+                  "contribution": 0.034897499
+                },
+                {
+                  "feature": "type_ipv4",
+                  "source_feature": "type_ipv4",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.496525323,
+                  "contribution": 0.030924299
+                },
+                {
+                  "feature": "has_dot",
+                  "source_feature": "has_dot",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.685994341,
+                  "contribution": 0.012077313
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "observation_count",
+                  "source_feature": "observation_count",
+                  "feature_group": "observation",
+                  "encoded_feature_value": -1.134964596,
+                  "contribution": -0.338470012
+                },
+                {
+                  "feature": "repeated_observation",
+                  "source_feature": "repeated_observation",
+                  "feature_group": "observation",
+                  "encoded_feature_value": -1.253566341,
+                  "contribution": -0.305397981
+                },
+                {
+                  "feature": "source_diversity_ratio",
+                  "source_feature": "source_diversity_ratio",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": 1.183169284,
+                  "contribution": -0.272330037
+                },
+                {
+                  "feature": "type_domain",
+                  "source_feature": "type_domain",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.768739768,
+                  "contribution": -0.098198193
+                },
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.126585326,
+                  "contribution": -0.066229301
+                },
+                {
+                  "feature": "has_colon",
+                  "source_feature": "has_colon",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.88241494,
+                  "contribution": -0.056914074
+                },
+                {
+                  "feature": "has_slash",
+                  "source_feature": "has_slash",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.88241494,
+                  "contribution": -0.056914074
+                },
+                {
+                  "feature": "type_url",
+                  "source_feature": "type_url",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.88241494,
+                  "contribution": -0.056914074
+                }
+              ],
+              "feature_group_contributions": {
+                "correlation": {
+                  "absolute_sum": 0.384834595,
+                  "signed_sum": -0.384834595
+                },
+                "ioc_intrinsic": {
+                  "absolute_sum": 0.574531381,
+                  "signed_sum": -0.240963647
+                },
+                "observation": {
+                  "absolute_sum": 0.643867993,
+                  "signed_sum": -0.643867993
+                },
+                "provenance_source": {
+                  "absolute_sum": 0.074553127,
+                  "signed_sum": -0.074553127
+                }
+              }
+            }
+          ],
+          "global_model_feature_contribution": {
+            "aggregation": "mean and sum of absolute per-example log-odds contribution; signed mean is also reported",
+            "features_ranked_by_mean_absolute_contribution": [
+              {
+                "feature": "distinct_reporter_count",
+                "source_feature": "distinct_reporter_count",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 90.116702039,
+                "mean_absolute_contribution": 0.600778014,
+                "mean_signed_contribution": 0.016637134
+              },
+              {
+                "feature": "character_alpha_count",
+                "source_feature": "character_alpha_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 54.354486171,
+                "mean_absolute_contribution": 0.362363241,
+                "mean_signed_contribution": 0.025404374
+              },
+              {
+                "feature": "value_length",
+                "source_feature": "value_length",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 45.138127434,
+                "mean_absolute_contribution": 0.30092085,
+                "mean_signed_contribution": 0.020567006
+              },
+              {
+                "feature": "repeated_observation",
+                "source_feature": "repeated_observation",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 35.2595851,
+                "mean_absolute_contribution": 0.235063901,
+                "mean_signed_contribution": 0.011105381
+              },
+              {
+                "feature": "observation_count",
+                "source_feature": "observation_count",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 34.058026265,
+                "mean_absolute_contribution": 0.227053508,
+                "mean_signed_contribution": 0.002963835
+              },
+              {
+                "feature": "source_diversity_ratio",
+                "source_feature": "source_diversity_ratio",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 30.524722873,
+                "mean_absolute_contribution": 0.203498152,
+                "mean_signed_contribution": 0.003238795
+              },
+              {
+                "feature": "character_non_alphanumeric_count",
+                "source_feature": "character_non_alphanumeric_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 22.402877185,
+                "mean_absolute_contribution": 0.149352515,
+                "mean_signed_contribution": -0.014737636
+              },
+              {
+                "feature": "distinct_source_count",
+                "source_feature": "distinct_source_count",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 12.983607855,
+                "mean_absolute_contribution": 0.086557386,
+                "mean_signed_contribution": 0.006304135
+              },
+              {
+                "feature": "multi_source",
+                "source_feature": "multi_source",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 12.983607855,
+                "mean_absolute_contribution": 0.086557386,
+                "mean_signed_contribution": 0.006304135
+              },
+              {
+                "feature": "source_threatfox",
+                "source_feature": "source_threatfox",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 12.983607855,
+                "mean_absolute_contribution": 0.086557386,
+                "mean_signed_contribution": 0.006304135
+              },
+              {
+                "feature": "has_colon",
+                "source_feature": "has_colon",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 9.685793092,
+                "mean_absolute_contribution": 0.064571954,
+                "mean_signed_contribution": 0.004622463
+              },
+              {
+                "feature": "has_slash",
+                "source_feature": "has_slash",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 9.685793092,
+                "mean_absolute_contribution": 0.064571954,
+                "mean_signed_contribution": 0.004622463
+              },
+              {
+                "feature": "type_url",
+                "source_feature": "type_url",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 9.685793092,
+                "mean_absolute_contribution": 0.064571954,
+                "mean_signed_contribution": 0.004622463
+              },
+              {
+                "feature": "type_domain",
+                "source_feature": "type_domain",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 7.447512232,
+                "mean_absolute_contribution": 0.049650082,
+                "mean_signed_contribution": -0.004031597
+              },
+              {
+                "feature": "type_ipv4",
+                "source_feature": "type_ipv4",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 6.528849258,
+                "mean_absolute_contribution": 0.043525662,
+                "mean_signed_contribution": 0.010076457
+              },
+              {
+                "feature": "has_hyphen",
+                "source_feature": "has_hyphen",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 6.194405537,
+                "mean_absolute_contribution": 0.041296037,
+                "mean_signed_contribution": -0.001294547
+              },
+              {
+                "feature": "type_hash_sha256",
+                "source_feature": "type_hash_sha256",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 4.939717711,
+                "mean_absolute_contribution": 0.032931451,
+                "mean_signed_contribution": -0.000343752
+              },
+              {
+                "feature": "ioc_type=url",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 3.542755622,
+                "mean_absolute_contribution": 0.023618371,
+                "mean_signed_contribution": 0.023618371
+              },
+              {
+                "feature": "character_digit_count",
+                "source_feature": "character_digit_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 3.297877997,
+                "mean_absolute_contribution": 0.021985853,
+                "mean_signed_contribution": 0.005193847
+              },
+              {
+                "feature": "has_dot",
+                "source_feature": "has_dot",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 2.327901984,
+                "mean_absolute_contribution": 0.015519347,
+                "mean_signed_contribution": 0.002516107
+              },
+              {
+                "feature": "ioc_type=domain",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.569159529,
+                "mean_absolute_contribution": 0.003794397,
+                "mean_signed_contribution": -0.003794397
+              },
+              {
+                "feature": "ioc_type=hash_sha256",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.388672929,
+                "mean_absolute_contribution": 0.002591153,
+                "mean_signed_contribution": 0.002591153
+              },
+              {
+                "feature": "ioc_type=ipv4",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.33443069,
+                "mean_absolute_contribution": 0.002229538,
+                "mean_signed_contribution": -0.002229538
+              },
+              {
+                "feature": "has_at_sign",
+                "source_feature": "has_at_sign",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "source_urlhaus",
+                "source_feature": "source_urlhaus",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_cve",
+                "source_feature": "type_cve",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_email",
+                "source_feature": "type_email",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_md5",
+                "source_feature": "type_hash_md5",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_sha1",
+                "source_feature": "type_hash_sha1",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ip_port",
+                "source_feature": "type_ip_port",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ipv6",
+                "source_feature": "type_ipv6",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              }
+            ]
+          },
+          "feature_group_contribution": {
+            "aggregation": "mean absolute and signed sum of feature log-odds contributions per held-out example; also normalized by encoded group width",
+            "groups": {
+              "correlation": {
+                "encoded_feature_count": 3,
+                "mean_absolute_contribution_per_example": 0.376612924,
+                "mean_absolute_contribution_per_feature_per_example": 0.125537641,
+                "mean_signed_contribution_per_example": 0.015847064
+              },
+              "ioc_intrinsic": {
+                "encoded_feature_count": 23,
+                "mean_absolute_contribution_per_example": 1.243494357,
+                "mean_absolute_contribution_per_feature_per_example": 0.054064972,
+                "mean_signed_contribution_per_example": 0.077403236
+              },
+              "observation": {
+                "encoded_feature_count": 2,
+                "mean_absolute_contribution_per_example": 0.462117409,
+                "mean_absolute_contribution_per_feature_per_example": 0.231058705,
+                "mean_signed_contribution_per_example": 0.014069217
+              },
+              "provenance_source": {
+                "encoded_feature_count": 3,
+                "mean_absolute_contribution_per_example": 0.687335399,
+                "mean_absolute_contribution_per_feature_per_example": 0.2291118,
+                "mean_signed_contribution_per_example": 0.022941269
+              }
+            }
+          }
+        },
+        "GaussianNaiveBayes": {
+          "attribution_method": "per-feature Gaussian log-likelihood ratio log p(x_j|positive) - log p(x_j|negative); contributions add to log prior odds",
+          "contribution_direction": "positive values push toward the positive class; negative values push toward the negative class",
+          "local_explanations": [
+            {
+              "benchmark_row_id": "SYN-00001",
+              "actual_target": "positive",
+              "predicted_class": "positive",
+              "positive_class_probability": 0.999999896,
+              "base_log_odds": 0.0,
+              "sum_feature_contributions": 16.080761285,
+              "reconstructed_log_odds": 16.080761285,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 3.003741029,
+                  "contribution": 4.166510876
+                },
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.083934548,
+                  "contribution": 3.663016417
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.097356731,
+                  "contribution": 3.337365005
+                },
+                {
+                  "feature": "distinct_reporter_count",
+                  "source_feature": "distinct_reporter_count",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": 2.176536666,
+                  "contribution": 2.177963673
+                },
+                {
+                  "feature": "observation_count",
+                  "source_feature": "observation_count",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 1.548401786,
+                  "contribution": 1.451359732
+                },
+                {
+                  "feature": "source_diversity_ratio",
+                  "source_feature": "source_diversity_ratio",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -1.455215927,
+                  "contribution": 0.73872604
+                },
+                {
+                  "feature": "repeated_observation",
+                  "source_feature": "repeated_observation",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 0.797724035,
+                  "contribution": 0.539296372
+                },
+                {
+                  "feature": "has_colon",
+                  "source_feature": "has_colon",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.200871324
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "distinct_source_count",
+                  "source_feature": "distinct_source_count",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "multi_source",
+                  "source_feature": "multi_source",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "source_threatfox",
+                  "source_feature": "source_threatfox",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.050436965,
+                  "contribution": -0.208123183
+                }
+              ],
+              "feature_group_contributions": {
+                "correlation": {
+                  "absolute_sum": 1.633468412,
+                  "signed_sum": -0.156016332
+                },
+                "ioc_intrinsic": {
+                  "absolute_sum": 12.93177539,
+                  "signed_sum": 12.515529024
+                },
+                "observation": {
+                  "absolute_sum": 1.990656104,
+                  "signed_sum": 1.990656104
+                },
+                "provenance_source": {
+                  "absolute_sum": 2.625334859,
+                  "signed_sum": 1.730592487
+                }
+              }
+            },
+            {
+              "benchmark_row_id": "SYN-00013",
+              "actual_target": "positive",
+              "predicted_class": "negative",
+              "positive_class_probability": 0.425976744,
+              "base_log_odds": 0.0,
+              "sum_feature_contributions": -0.298285157,
+              "reconstructed_log_odds": -0.298285157,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "repeated_observation",
+                  "source_feature": "repeated_observation",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 0.797724035,
+                  "contribution": 0.539296372
+                },
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.816950333,
+                  "contribution": 0.436995773
+                },
+                {
+                  "feature": "source_diversity_ratio",
+                  "source_feature": "source_diversity_ratio",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.57575419,
+                  "contribution": 0.38977376
+                },
+                {
+                  "feature": "has_colon",
+                  "source_feature": "has_colon",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.200871324
+                },
+                {
+                  "feature": "has_slash",
+                  "source_feature": "has_slash",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.200871324
+                },
+                {
+                  "feature": "ioc_type=url",
+                  "source_feature": "ioc_type",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.0,
+                  "contribution": 0.200871324
+                },
+                {
+                  "feature": "type_url",
+                  "source_feature": "type_url",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.133253705,
+                  "contribution": 0.200871324
+                },
+                {
+                  "feature": "has_hyphen",
+                  "source_feature": "has_hyphen",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 1.480367982,
+                  "contribution": 0.131805569
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.381645312,
+                  "contribution": -0.591640977
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.865812631,
+                  "contribution": -0.546342224
+                },
+                {
+                  "feature": "distinct_source_count",
+                  "source_feature": "distinct_source_count",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "multi_source",
+                  "source_feature": "multi_source",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "source_threatfox",
+                  "source_feature": "source_threatfox",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.138617672,
+                  "contribution": -0.304581334
+                },
+                {
+                  "feature": "observation_count",
+                  "source_feature": "observation_count",
+                  "feature_group": "observation",
+                  "encoded_feature_value": -0.240509135,
+                  "contribution": -0.281335358
+                },
+                {
+                  "feature": "distinct_reporter_count",
+                  "source_feature": "distinct_reporter_count",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -0.026931275,
+                  "contribution": -0.155097521
+                }
+              ],
+              "feature_group_contributions": {
+                "correlation": {
+                  "absolute_sum": 1.284516132,
+                  "signed_sum": -0.504968612
+                },
+                "ioc_intrinsic": {
+                  "absolute_sum": 3.436320217,
+                  "signed_sum": 0.551191147
+                },
+                "observation": {
+                  "absolute_sum": 0.82063173,
+                  "signed_sum": 0.257961014
+                },
+                "provenance_source": {
+                  "absolute_sum": 0.602468707,
+                  "signed_sum": -0.602468707
+                }
+              }
+            }
+          ],
+          "global_model_feature_contribution": {
+            "aggregation": "mean and sum of absolute per-example log-odds contribution; signed mean is also reported",
+            "features_ranked_by_mean_absolute_contribution": [
+              {
+                "feature": "character_alpha_count",
+                "source_feature": "character_alpha_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 125.377248991,
+                "mean_absolute_contribution": 0.835848327,
+                "mean_signed_contribution": 0.113559455
+              },
+              {
+                "feature": "value_length",
+                "source_feature": "value_length",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 118.013115581,
+                "mean_absolute_contribution": 0.786754104,
+                "mean_signed_contribution": 0.088791296
+              },
+              {
+                "feature": "distinct_source_count",
+                "source_feature": "distinct_source_count",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 110.304836743,
+                "mean_absolute_contribution": 0.735365578,
+                "mean_signed_contribution": 0.09711602
+              },
+              {
+                "feature": "multi_source",
+                "source_feature": "multi_source",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 110.304836743,
+                "mean_absolute_contribution": 0.735365578,
+                "mean_signed_contribution": 0.09711602
+              },
+              {
+                "feature": "source_threatfox",
+                "source_feature": "source_threatfox",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 110.304836743,
+                "mean_absolute_contribution": 0.735365578,
+                "mean_signed_contribution": 0.09711602
+              },
+              {
+                "feature": "distinct_reporter_count",
+                "source_feature": "distinct_reporter_count",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 106.606888649,
+                "mean_absolute_contribution": 0.710712591,
+                "mean_signed_contribution": 0.091709581
+              },
+              {
+                "feature": "character_digit_count",
+                "source_feature": "character_digit_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 102.25185831,
+                "mean_absolute_contribution": 0.681679055,
+                "mean_signed_contribution": 0.189614136
+              },
+              {
+                "feature": "repeated_observation",
+                "source_feature": "repeated_observation",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 101.827343468,
+                "mean_absolute_contribution": 0.678848956,
+                "mean_signed_contribution": 0.004259782
+              },
+              {
+                "feature": "observation_count",
+                "source_feature": "observation_count",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 97.829317928,
+                "mean_absolute_contribution": 0.652195453,
+                "mean_signed_contribution": 0.01989866
+              },
+              {
+                "feature": "source_diversity_ratio",
+                "source_feature": "source_diversity_ratio",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 82.345303049,
+                "mean_absolute_contribution": 0.548968687,
+                "mean_signed_contribution": -0.002734293
+              },
+              {
+                "feature": "character_non_alphanumeric_count",
+                "source_feature": "character_non_alphanumeric_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 76.557966938,
+                "mean_absolute_contribution": 0.510386446,
+                "mean_signed_contribution": -0.034729025
+              },
+              {
+                "feature": "has_colon",
+                "source_feature": "has_colon",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "has_slash",
+                "source_feature": "has_slash",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "ioc_type=url",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "type_url",
+                "source_feature": "type_url",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "ioc_type=hash_sha256",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 24.353059836,
+                "mean_absolute_contribution": 0.162353732,
+                "mean_signed_contribution": 0.001194182
+              },
+              {
+                "feature": "type_hash_sha256",
+                "source_feature": "type_hash_sha256",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 24.353059836,
+                "mean_absolute_contribution": 0.162353732,
+                "mean_signed_contribution": 0.001194182
+              },
+              {
+                "feature": "has_dot",
+                "source_feature": "has_dot",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 23.035931976,
+                "mean_absolute_contribution": 0.15357288,
+                "mean_signed_contribution": 0.024387115
+              },
+              {
+                "feature": "ioc_type=ipv4",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 22.792965276,
+                "mean_absolute_contribution": 0.151953102,
+                "mean_signed_contribution": 0.034607202
+              },
+              {
+                "feature": "type_ipv4",
+                "source_feature": "type_ipv4",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 22.792965276,
+                "mean_absolute_contribution": 0.151953102,
+                "mean_signed_contribution": 0.034607202
+              },
+              {
+                "feature": "has_hyphen",
+                "source_feature": "has_hyphen",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.235076252,
+                "mean_absolute_contribution": 0.081567175,
+                "mean_signed_contribution": -0.002483834
+              },
+              {
+                "feature": "ioc_type=domain",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.014756745,
+                "mean_absolute_contribution": 0.080098378,
+                "mean_signed_contribution": -0.006568712
+              },
+              {
+                "feature": "type_domain",
+                "source_feature": "type_domain",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.014756745,
+                "mean_absolute_contribution": 0.080098378,
+                "mean_signed_contribution": -0.006568712
+              },
+              {
+                "feature": "has_at_sign",
+                "source_feature": "has_at_sign",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "source_urlhaus",
+                "source_feature": "source_urlhaus",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_cve",
+                "source_feature": "type_cve",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_email",
+                "source_feature": "type_email",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_md5",
+                "source_feature": "type_hash_md5",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_sha1",
+                "source_feature": "type_hash_sha1",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ip_port",
+                "source_feature": "type_ip_port",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ipv6",
+                "source_feature": "type_ipv6",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              }
+            ]
+          },
+          "feature_group_contribution": {
+            "aggregation": "mean absolute and signed sum of feature log-odds contributions per held-out example; also normalized by encoded group width",
+            "groups": {
+              "correlation": {
+                "encoded_feature_count": 3,
+                "mean_absolute_contribution_per_example": 2.019699844,
+                "mean_absolute_contribution_per_feature_per_example": 0.673233281,
+                "mean_signed_contribution_per_example": 0.191497748
+              },
+              "ioc_intrinsic": {
+                "encoded_feature_count": 23,
+                "mean_absolute_contribution_per_example": 4.547236733,
+                "mean_absolute_contribution_per_feature_per_example": 0.197705945,
+                "mean_signed_contribution_per_example": 0.489618912
+              },
+              "observation": {
+                "encoded_feature_count": 2,
+                "mean_absolute_contribution_per_example": 1.331044409,
+                "mean_absolute_contribution_per_feature_per_example": 0.665522205,
+                "mean_signed_contribution_per_example": 0.024158441
+              },
+              "provenance_source": {
+                "encoded_feature_count": 3,
+                "mean_absolute_contribution_per_example": 1.446078169,
+                "mean_absolute_contribution_per_feature_per_example": 0.482026056,
+                "mean_signed_contribution_per_example": 0.188825602
+              }
+            }
+          }
+        }
+      }
+    },
+    "C": {
+      "name": "IOC + correlation + threat context",
+      "feature_count": 44,
+      "encoded_feature_count": 47,
+      "feature_groups_included": [
+        "correlation",
+        "ioc_intrinsic",
+        "observation",
+        "provenance_source",
+        "threat_context"
+      ],
+      "models": {
+        "LogisticRegression": {
+          "attribution_method": "encoded feature value × learned coefficient; local contributions add to the intercept in log-odds space",
+          "contribution_direction": "positive values push toward the positive class; negative values push toward the negative class",
+          "local_explanations": [
+            {
+              "benchmark_row_id": "SYN-00001",
+              "actual_target": "positive",
+              "predicted_class": "positive",
+              "positive_class_probability": 0.99975877,
+              "base_log_odds": 0.055360707,
+              "sum_feature_contributions": 8.274156363,
+              "reconstructed_log_odds": 8.32951707,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "tag_count",
+                  "source_feature": "tag_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 2.193293266,
+                  "contribution": 1.699733731
+                },
+                {
+                  "feature": "distinct_reporter_count",
+                  "source_feature": "distinct_reporter_count",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": 2.176536666,
+                  "contribution": 1.129715282
+                },
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.083934548,
+                  "contribution": 1.09755405
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.097356731,
+                  "contribution": 0.952684023
+                },
+                {
+                  "feature": "confidence_max",
+                  "source_feature": "confidence_max",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 0.992766587,
+                  "contribution": 0.749993492
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 3.003741029,
+                  "contribution": 0.747489375
+                },
+                {
+                  "feature": "distinct_tag_count",
+                  "source_feature": "distinct_tag_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 2.877621107,
+                  "contribution": 0.510055425
+                },
+                {
+                  "feature": "observation_count",
+                  "source_feature": "observation_count",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 1.548401786,
+                  "contribution": 0.4238992
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "distinct_malware_family_count",
+                  "source_feature": "distinct_malware_family_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": -0.773193242,
+                  "contribution": -0.609869878
+                },
+                {
+                  "feature": "threat_context_available",
+                  "source_feature": "threat_context_available",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 0.158293865,
+                  "contribution": -0.052406111
+                },
+                {
+                  "feature": "distinct_source_count",
+                  "source_feature": "distinct_source_count",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.040318795
+                },
+                {
+                  "feature": "multi_source",
+                  "source_feature": "multi_source",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.040318795
+                },
+                {
+                  "feature": "source_threatfox",
+                  "source_feature": "source_threatfox",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.040318795
+                },
+                {
+                  "feature": "type_domain",
+                  "source_feature": "type_domain",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.565374295,
+                  "contribution": -0.012505695
+                },
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.050436965,
+                  "contribution": -0.005097026
+                },
+                {
+                  "feature": "type_hash_sha256",
+                  "source_feature": "type_hash_sha256",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.373149442,
+                  "contribution": -0.000622041
+                }
+              ],
+              "feature_group_contributions": {
+                "correlation": {
+                  "absolute_sum": 0.417196813,
+                  "signed_sum": 0.255921633
+                },
+                "ioc_intrinsic": {
+                  "absolute_sum": 3.25937263,
+                  "signed_sum": 3.222923106
+                },
+                "observation": {
+                  "absolute_sum": 0.577922605,
+                  "signed_sum": 0.577922605
+                },
+                "provenance_source": {
+                  "absolute_sum": 1.279762115,
+                  "signed_sum": 1.199124525
+                },
+                "threat_context": {
+                  "absolute_sum": 4.342816467,
+                  "signed_sum": 3.018264489
+                }
+              }
+            },
+            {
+              "benchmark_row_id": "SYN-00025",
+              "actual_target": "negative",
+              "predicted_class": "negative",
+              "positive_class_probability": 0.169937232,
+              "base_log_odds": 0.055360707,
+              "sum_feature_contributions": -1.641432883,
+              "reconstructed_log_odds": -1.586072176,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "tag_count",
+                  "source_feature": "tag_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 0.353053422,
+                  "contribution": 0.273605368
+                },
+                {
+                  "feature": "source_diversity_ratio",
+                  "source_feature": "source_diversity_ratio",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -1.162063187,
+                  "contribution": 0.268759486
+                },
+                {
+                  "feature": "observation_count",
+                  "source_feature": "observation_count",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 0.653946326,
+                  "contribution": 0.179028032
+                },
+                {
+                  "feature": "repeated_observation",
+                  "source_feature": "repeated_observation",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 0.797724035,
+                  "contribution": 0.154023405
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.585269991,
+                  "contribution": 0.145646078
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.262711067,
+                  "contribution": 0.119331458
+                },
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.816950333,
+                  "contribution": 0.082558827
+                },
+                {
+                  "feature": "earliest_observation_timestamp=__missing__",
+                  "source_feature": "earliest_observation_timestamp",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 1.0,
+                  "contribution": 0.053055487
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "distinct_malware_family_count",
+                  "source_feature": "distinct_malware_family_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": -0.773193242,
+                  "contribution": -0.609869878
+                },
+                {
+                  "feature": "distinct_reporter_count",
+                  "source_feature": "distinct_reporter_count",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -1.128665245,
+                  "contribution": -0.58582536
+                },
+                {
+                  "feature": "context_richness",
+                  "source_feature": "context_richness",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": -0.619856012,
+                  "contribution": -0.479371402
+                },
+                {
+                  "feature": "confidence_source_count",
+                  "source_feature": "confidence_source_count",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -1.212582791,
+                  "contribution": -0.319642547
+                },
+                {
+                  "feature": "confidence_available",
+                  "source_feature": "confidence_available",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": -1.366104695,
+                  "contribution": -0.172318635
+                },
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.296625316,
+                  "contribution": -0.156224829
+                },
+                {
+                  "feature": "type_ipv4",
+                  "source_feature": "type_ipv4",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.013995972,
+                  "contribution": -0.147662727
+                },
+                {
+                  "feature": "has_dot",
+                  "source_feature": "has_dot",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -1.457737974,
+                  "contribution": -0.089557475
+                }
+              ],
+              "feature_group_contributions": {
+                "correlation": {
+                  "absolute_sum": 0.349397076,
+                  "signed_sum": 0.188121896
+                },
+                "ioc_intrinsic": {
+                  "absolute_sum": 0.962335708,
+                  "signed_sum": -0.267262982
+                },
+                "observation": {
+                  "absolute_sum": 0.333051437,
+                  "signed_sum": 0.333051437
+                },
+                "provenance_source": {
+                  "absolute_sum": 0.945786702,
+                  "signed_sum": -0.945786702
+                },
+                "threat_context": {
+                  "absolute_sum": 1.767272158,
+                  "signed_sum": -0.949556534
+                }
+              }
+            }
+          ],
+          "global_model_feature_contribution": {
+            "aggregation": "mean and sum of absolute per-example log-odds contribution; signed mean is also reported",
+            "features_ranked_by_mean_absolute_contribution": [
+              {
+                "feature": "distinct_malware_family_count",
+                "source_feature": "distinct_malware_family_count",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 112.102063264,
+                "mean_absolute_contribution": 0.747347088,
+                "mean_signed_contribution": 0.039898029
+              },
+              {
+                "feature": "context_richness",
+                "source_feature": "context_richness",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 92.968702767,
+                "mean_absolute_contribution": 0.619791352,
+                "mean_signed_contribution": 0.014674635
+              },
+              {
+                "feature": "tag_count",
+                "source_feature": "tag_count",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 89.846086923,
+                "mean_absolute_contribution": 0.598973913,
+                "mean_signed_contribution": 0.02324061
+              },
+              {
+                "feature": "distinct_reporter_count",
+                "source_feature": "distinct_reporter_count",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 68.832573654,
+                "mean_absolute_contribution": 0.458883824,
+                "mean_signed_contribution": 0.012707708
+              },
+              {
+                "feature": "confidence_max",
+                "source_feature": "confidence_max",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 67.291293787,
+                "mean_absolute_contribution": 0.448608625,
+                "mean_signed_contribution": 0.122782943
+              },
+              {
+                "feature": "distinct_threat_type_count",
+                "source_feature": "distinct_threat_type_count",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 58.43840826,
+                "mean_absolute_contribution": 0.389589388,
+                "mean_signed_contribution": 0.066335868
+              },
+              {
+                "feature": "character_alpha_count",
+                "source_feature": "character_alpha_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 54.715507314,
+                "mean_absolute_contribution": 0.364770049,
+                "mean_signed_contribution": 0.025573109
+              },
+              {
+                "feature": "value_length",
+                "source_feature": "value_length",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 47.374820141,
+                "mean_absolute_contribution": 0.315832134,
+                "mean_signed_contribution": 0.021586146
+              },
+              {
+                "feature": "confidence_source_count",
+                "source_feature": "confidence_source_count",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 36.124378539,
+                "mean_absolute_contribution": 0.24082919,
+                "mean_signed_contribution": -0.027670549
+              },
+              {
+                "feature": "confidence_min",
+                "source_feature": "confidence_min",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 35.882046106,
+                "mean_absolute_contribution": 0.239213641,
+                "mean_signed_contribution": 0.043204285
+              },
+              {
+                "feature": "observation_count",
+                "source_feature": "observation_count",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 31.265150739,
+                "mean_absolute_contribution": 0.208434338,
+                "mean_signed_contribution": 0.002720791
+              },
+              {
+                "feature": "character_digit_count",
+                "source_feature": "character_digit_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 30.826413663,
+                "mean_absolute_contribution": 0.205509424,
+                "mean_signed_contribution": 0.048548693
+              },
+              {
+                "feature": "source_diversity_ratio",
+                "source_feature": "source_diversity_ratio",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 30.671649222,
+                "mean_absolute_contribution": 0.204477661,
+                "mean_signed_contribution": 0.003254384
+              },
+              {
+                "feature": "repeated_observation",
+                "source_feature": "repeated_observation",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 27.944246421,
+                "mean_absolute_contribution": 0.186294976,
+                "mean_signed_contribution": 0.008801337
+              },
+              {
+                "feature": "distinct_tag_count",
+                "source_feature": "distinct_tag_count",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 21.153448795,
+                "mean_absolute_contribution": 0.141022992,
+                "mean_signed_contribution": -0.002444355
+              },
+              {
+                "feature": "confidence_available",
+                "source_feature": "confidence_available",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 18.889180612,
+                "mean_absolute_contribution": 0.125927871,
+                "mean_signed_contribution": -0.018819783
+              },
+              {
+                "feature": "has_hyphen",
+                "source_feature": "has_hyphen",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 17.747585171,
+                "mean_absolute_contribution": 0.118317234,
+                "mean_signed_contribution": -0.003709004
+              },
+              {
+                "feature": "confidence_mean",
+                "source_feature": "confidence_mean",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 15.751516666,
+                "mean_absolute_contribution": 0.105010111,
+                "mean_signed_contribution": -0.028105533
+              },
+              {
+                "feature": "threat_context_available",
+                "source_feature": "threat_context_available",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 13.978138952,
+                "mean_absolute_contribution": 0.093187593,
+                "mean_signed_contribution": -0.009528384
+              },
+              {
+                "feature": "character_non_alphanumeric_count",
+                "source_feature": "character_non_alphanumeric_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.18961768,
+                "mean_absolute_contribution": 0.081264118,
+                "mean_signed_contribution": -0.008018887
+              },
+              {
+                "feature": "distinct_source_count",
+                "source_feature": "distinct_source_count",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 9.305994863,
+                "mean_absolute_contribution": 0.062039966,
+                "mean_signed_contribution": 0.004518486
+              },
+              {
+                "feature": "multi_source",
+                "source_feature": "multi_source",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 9.305994863,
+                "mean_absolute_contribution": 0.062039966,
+                "mean_signed_contribution": 0.004518486
+              },
+              {
+                "feature": "source_threatfox",
+                "source_feature": "source_threatfox",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 9.305994863,
+                "mean_absolute_contribution": 0.062039966,
+                "mean_signed_contribution": 0.004518486
+              },
+              {
+                "feature": "has_dot",
+                "source_feature": "has_dot",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 8.123389811,
+                "mean_absolute_contribution": 0.054155932,
+                "mean_signed_contribution": 0.008780145
+              },
+              {
+                "feature": "earliest_observation_timestamp=__missing__",
+                "source_feature": "earliest_observation_timestamp",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 7.95832311,
+                "mean_absolute_contribution": 0.053055487,
+                "mean_signed_contribution": 0.053055487
+              },
+              {
+                "feature": "latest_observation_timestamp=__missing__",
+                "source_feature": "latest_observation_timestamp",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 7.95832311,
+                "mean_absolute_contribution": 0.053055487,
+                "mean_signed_contribution": 0.053055487
+              },
+              {
+                "feature": "type_ipv4",
+                "source_feature": "type_ipv4",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 7.685824503,
+                "mean_absolute_contribution": 0.05123883,
+                "mean_signed_contribution": 0.011862103
+              },
+              {
+                "feature": "has_colon",
+                "source_feature": "has_colon",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 5.806281693,
+                "mean_absolute_contribution": 0.038708545,
+                "mean_signed_contribution": 0.002770999
+              },
+              {
+                "feature": "has_slash",
+                "source_feature": "has_slash",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 5.806281693,
+                "mean_absolute_contribution": 0.038708545,
+                "mean_signed_contribution": 0.002770999
+              },
+              {
+                "feature": "type_url",
+                "source_feature": "type_url",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 5.806281693,
+                "mean_absolute_contribution": 0.038708545,
+                "mean_signed_contribution": 0.002770999
+              },
+              {
+                "feature": "ioc_type=url",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 3.010994126,
+                "mean_absolute_contribution": 0.020073294,
+                "mean_signed_contribution": 0.020073294
+              },
+              {
+                "feature": "type_domain",
+                "source_feature": "type_domain",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 2.967176824,
+                "mean_absolute_contribution": 0.019781179,
+                "mean_signed_contribution": 0.001606236
+              },
+              {
+                "feature": "ioc_type=domain",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.915437977,
+                "mean_absolute_contribution": 0.00610292,
+                "mean_signed_contribution": 0.00610292
+              },
+              {
+                "feature": "ioc_type=ipv4",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.374224193,
+                "mean_absolute_contribution": 0.002494828,
+                "mean_signed_contribution": -0.002494828
+              },
+              {
+                "feature": "type_hash_sha256",
+                "source_feature": "type_hash_sha256",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.162522415,
+                "mean_absolute_contribution": 0.001083483,
+                "mean_signed_contribution": -1.131e-05
+              },
+              {
+                "feature": "ioc_type=hash_sha256",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.126550324,
+                "mean_absolute_contribution": 0.000843669,
+                "mean_signed_contribution": 0.000843669
+              },
+              {
+                "feature": "has_at_sign",
+                "source_feature": "has_at_sign",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "observations_with_timestamps",
+                "source_feature": "observations_with_timestamps",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "source_urlhaus",
+                "source_feature": "source_urlhaus",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "temporal_coverage",
+                "source_feature": "temporal_coverage",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "temporal_span_seconds",
+                "source_feature": "temporal_span_seconds",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_cve",
+                "source_feature": "type_cve",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_email",
+                "source_feature": "type_email",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_md5",
+                "source_feature": "type_hash_md5",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_sha1",
+                "source_feature": "type_hash_sha1",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ip_port",
+                "source_feature": "type_ip_port",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ipv6",
+                "source_feature": "type_ipv6",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              }
+            ]
+          },
+          "feature_group_contribution": {
+            "aggregation": "mean absolute and signed sum of feature log-odds contributions per held-out example; also normalized by encoded group width",
+            "groups": {
+              "correlation": {
+                "encoded_feature_count": 3,
+                "mean_absolute_contribution_per_example": 0.328557593,
+                "mean_absolute_contribution_per_feature_per_example": 0.109519198,
+                "mean_signed_contribution_per_example": 0.012291355
+              },
+              "ioc_intrinsic": {
+                "encoded_feature_count": 23,
+                "mean_absolute_contribution_per_example": 1.357592728,
+                "mean_absolute_contribution_per_feature_per_example": 0.059025771,
+                "mean_signed_contribution_per_example": 0.139055281
+              },
+              "observation": {
+                "encoded_feature_count": 3,
+                "mean_absolute_contribution_per_example": 0.394729314,
+                "mean_absolute_contribution_per_feature_per_example": 0.131576438,
+                "mean_signed_contribution_per_example": 0.011522128
+              },
+              "provenance_source": {
+                "encoded_feature_count": 4,
+                "mean_absolute_contribution_per_example": 0.76175298,
+                "mean_absolute_contribution_per_feature_per_example": 0.190438245,
+                "mean_signed_contribution_per_example": -0.010444355
+              },
+              "threat_context": {
+                "encoded_feature_count": 14,
+                "mean_absolute_contribution_per_example": 3.614783549,
+                "mean_absolute_contribution_per_feature_per_example": 0.258198825,
+                "mean_signed_contribution_per_example": 0.35734929
+              }
+            }
+          }
+        },
+        "GaussianNaiveBayes": {
+          "attribution_method": "per-feature Gaussian log-likelihood ratio log p(x_j|positive) - log p(x_j|negative); contributions add to log prior odds",
+          "contribution_direction": "positive values push toward the positive class; negative values push toward the negative class",
+          "local_explanations": [
+            {
+              "benchmark_row_id": "SYN-00001",
+              "actual_target": "positive",
+              "predicted_class": "positive",
+              "positive_class_probability": 1.0,
+              "base_log_odds": 0.0,
+              "sum_feature_contributions": 28.782278329,
+              "reconstructed_log_odds": 28.782278329,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "distinct_tag_count",
+                  "source_feature": "distinct_tag_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 2.877621107,
+                  "contribution": 6.250617184
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 3.003741029,
+                  "contribution": 4.166510876
+                },
+                {
+                  "feature": "tag_count",
+                  "source_feature": "tag_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 2.193293266,
+                  "contribution": 4.009527247
+                },
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.083934548,
+                  "contribution": 3.663016417
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 2.097356731,
+                  "contribution": 3.337365005
+                },
+                {
+                  "feature": "distinct_reporter_count",
+                  "source_feature": "distinct_reporter_count",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": 2.176536666,
+                  "contribution": 2.177963673
+                },
+                {
+                  "feature": "observation_count",
+                  "source_feature": "observation_count",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 1.548401786,
+                  "contribution": 1.451359732
+                },
+                {
+                  "feature": "threat_context_available",
+                  "source_feature": "threat_context_available",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 0.158293865,
+                  "contribution": 1.151812206
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "distinct_malware_family_count",
+                  "source_feature": "distinct_malware_family_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": -0.773193242,
+                  "contribution": -0.92391755
+                },
+                {
+                  "feature": "distinct_source_count",
+                  "source_feature": "distinct_source_count",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "multi_source",
+                  "source_feature": "multi_source",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "source_threatfox",
+                  "source_feature": "source_threatfox",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "confidence_mean",
+                  "source_feature": "confidence_mean",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": -0.89337041,
+                  "contribution": -0.316620063
+                },
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.050436965,
+                  "contribution": -0.208123183
+                },
+                {
+                  "feature": "confidence_min",
+                  "source_feature": "confidence_min",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 0.371660538,
+                  "contribution": -0.064801693
+                }
+              ],
+              "feature_group_contributions": {
+                "correlation": {
+                  "absolute_sum": 1.633468412,
+                  "signed_sum": -0.156016332
+                },
+                "ioc_intrinsic": {
+                  "absolute_sum": 12.93177539,
+                  "signed_sum": 12.515529024
+                },
+                "observation": {
+                  "absolute_sum": 1.990656104,
+                  "signed_sum": 1.990656104
+                },
+                "provenance_source": {
+                  "absolute_sum": 2.945323676,
+                  "signed_sum": 2.050581304
+                },
+                "threat_context": {
+                  "absolute_sum": 14.99220684,
+                  "signed_sum": 12.381528228
+                }
+              }
+            },
+            {
+              "benchmark_row_id": "SYN-00025",
+              "actual_target": "negative",
+              "predicted_class": "negative",
+              "positive_class_probability": 0.003121599,
+              "base_log_odds": 0.0,
+              "sum_feature_contributions": -5.766283497,
+              "reconstructed_log_odds": -5.766283497,
+              "top_positive_contributing_features": [
+                {
+                  "feature": "threat_context_available",
+                  "source_feature": "threat_context_available",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 0.158293865,
+                  "contribution": 1.151812206
+                },
+                {
+                  "feature": "source_diversity_ratio",
+                  "source_feature": "source_diversity_ratio",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -1.162063187,
+                  "contribution": 0.63886058
+                },
+                {
+                  "feature": "repeated_observation",
+                  "source_feature": "repeated_observation",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 0.797724035,
+                  "contribution": 0.539296372
+                },
+                {
+                  "feature": "observation_count",
+                  "source_feature": "observation_count",
+                  "feature_group": "observation",
+                  "encoded_feature_value": 0.653946326,
+                  "contribution": 0.482703981
+                },
+                {
+                  "feature": "character_non_alphanumeric_count",
+                  "source_feature": "character_non_alphanumeric_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.816950333,
+                  "contribution": 0.436995773
+                },
+                {
+                  "feature": "tag_count",
+                  "source_feature": "tag_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": 0.353053422,
+                  "contribution": 0.341982762
+                },
+                {
+                  "feature": "character_digit_count",
+                  "source_feature": "character_digit_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.585269991,
+                  "contribution": 0.219104634
+                },
+                {
+                  "feature": "value_length",
+                  "source_feature": "value_length",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": 0.262711067,
+                  "contribution": 0.159492435
+                }
+              ],
+              "top_negative_contributing_features": [
+                {
+                  "feature": "confidence_available",
+                  "source_feature": "confidence_available",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": -1.366104695,
+                  "contribution": -1.451182197
+                },
+                {
+                  "feature": "context_richness",
+                  "source_feature": "context_richness",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": -0.619856012,
+                  "contribution": -1.420836461
+                },
+                {
+                  "feature": "confidence_source_count",
+                  "source_feature": "confidence_source_count",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -1.212582791,
+                  "contribution": -0.996879351
+                },
+                {
+                  "feature": "distinct_malware_family_count",
+                  "source_feature": "distinct_malware_family_count",
+                  "feature_group": "threat_context",
+                  "encoded_feature_value": -0.773193242,
+                  "contribution": -0.92391755
+                },
+                {
+                  "feature": "distinct_reporter_count",
+                  "source_feature": "distinct_reporter_count",
+                  "feature_group": "provenance_source",
+                  "encoded_feature_value": -1.128665245,
+                  "contribution": -0.698850754
+                },
+                {
+                  "feature": "character_alpha_count",
+                  "source_feature": "character_alpha_count",
+                  "feature_group": "ioc_intrinsic",
+                  "encoded_feature_value": -0.296625316,
+                  "contribution": -0.524974035
+                },
+                {
+                  "feature": "distinct_source_count",
+                  "source_feature": "distinct_source_count",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                },
+                {
+                  "feature": "multi_source",
+                  "source_feature": "multi_source",
+                  "feature_group": "correlation",
+                  "encoded_feature_value": -0.589326216,
+                  "contribution": -0.447371186
+                }
+              ],
+              "feature_group_contributions": {
+                "correlation": {
+                  "absolute_sum": 1.533602952,
+                  "signed_sum": -0.255881792
+                },
+                "ioc_intrinsic": {
+                  "absolute_sum": 3.446065111,
+                  "signed_sum": -1.240804395
+                },
+                "observation": {
+                  "absolute_sum": 1.022000353,
+                  "signed_sum": 1.022000353
+                },
+                "provenance_source": {
+                  "absolute_sum": 2.143101291,
+                  "signed_sum": -2.143101291
+                },
+                "threat_context": {
+                  "absolute_sum": 6.137406478,
+                  "signed_sum": -3.148496372
+                }
+              }
+            }
+          ],
+          "global_model_feature_contribution": {
+            "aggregation": "mean and sum of absolute per-example log-odds contribution; signed mean is also reported",
+            "features_ranked_by_mean_absolute_contribution": [
+              {
+                "feature": "threat_context_available",
+                "source_feature": "threat_context_available",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 469.674028638,
+                "mean_absolute_contribution": 3.131160191,
+                "mean_signed_contribution": -0.873608268
+              },
+              {
+                "feature": "context_richness",
+                "source_feature": "context_richness",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 268.275180417,
+                "mean_absolute_contribution": 1.788501203,
+                "mean_signed_contribution": -0.252364411
+              },
+              {
+                "feature": "distinct_malware_family_count",
+                "source_feature": "distinct_malware_family_count",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 207.691355885,
+                "mean_absolute_contribution": 1.384609039,
+                "mean_signed_contribution": 0.312864681
+              },
+              {
+                "feature": "tag_count",
+                "source_feature": "tag_count",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 151.477420448,
+                "mean_absolute_contribution": 1.00984947,
+                "mean_signed_contribution": 0.130916943
+              },
+              {
+                "feature": "confidence_available",
+                "source_feature": "confidence_available",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 148.592312064,
+                "mean_absolute_contribution": 0.990615414,
+                "mean_signed_contribution": -0.228377632
+              },
+              {
+                "feature": "distinct_tag_count",
+                "source_feature": "distinct_tag_count",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 142.725840872,
+                "mean_absolute_contribution": 0.951505606,
+                "mean_signed_contribution": 0.11779531
+              },
+              {
+                "feature": "character_alpha_count",
+                "source_feature": "character_alpha_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 125.377248991,
+                "mean_absolute_contribution": 0.835848327,
+                "mean_signed_contribution": 0.113559455
+              },
+              {
+                "feature": "value_length",
+                "source_feature": "value_length",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 118.013115581,
+                "mean_absolute_contribution": 0.786754104,
+                "mean_signed_contribution": 0.088791296
+              },
+              {
+                "feature": "confidence_source_count",
+                "source_feature": "confidence_source_count",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 116.527306842,
+                "mean_absolute_contribution": 0.776848712,
+                "mean_signed_contribution": -0.060529943
+              },
+              {
+                "feature": "distinct_source_count",
+                "source_feature": "distinct_source_count",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 110.304836743,
+                "mean_absolute_contribution": 0.735365578,
+                "mean_signed_contribution": 0.09711602
+              },
+              {
+                "feature": "multi_source",
+                "source_feature": "multi_source",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 110.304836743,
+                "mean_absolute_contribution": 0.735365578,
+                "mean_signed_contribution": 0.09711602
+              },
+              {
+                "feature": "source_threatfox",
+                "source_feature": "source_threatfox",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 110.304836743,
+                "mean_absolute_contribution": 0.735365578,
+                "mean_signed_contribution": 0.09711602
+              },
+              {
+                "feature": "distinct_reporter_count",
+                "source_feature": "distinct_reporter_count",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 106.606888649,
+                "mean_absolute_contribution": 0.710712591,
+                "mean_signed_contribution": 0.091709581
+              },
+              {
+                "feature": "character_digit_count",
+                "source_feature": "character_digit_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 102.25185831,
+                "mean_absolute_contribution": 0.681679055,
+                "mean_signed_contribution": 0.189614136
+              },
+              {
+                "feature": "repeated_observation",
+                "source_feature": "repeated_observation",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 101.827343468,
+                "mean_absolute_contribution": 0.678848956,
+                "mean_signed_contribution": 0.004259782
+              },
+              {
+                "feature": "confidence_max",
+                "source_feature": "confidence_max",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 98.394674334,
+                "mean_absolute_contribution": 0.655964496,
+                "mean_signed_contribution": 0.200501923
+              },
+              {
+                "feature": "observation_count",
+                "source_feature": "observation_count",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 97.829317928,
+                "mean_absolute_contribution": 0.652195453,
+                "mean_signed_contribution": 0.01989866
+              },
+              {
+                "feature": "source_diversity_ratio",
+                "source_feature": "source_diversity_ratio",
+                "feature_group": "correlation",
+                "aggregate_absolute_contribution": 82.345303049,
+                "mean_absolute_contribution": 0.548968687,
+                "mean_signed_contribution": -0.002734293
+              },
+              {
+                "feature": "character_non_alphanumeric_count",
+                "source_feature": "character_non_alphanumeric_count",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 76.557966938,
+                "mean_absolute_contribution": 0.510386446,
+                "mean_signed_contribution": -0.034729025
+              },
+              {
+                "feature": "distinct_threat_type_count",
+                "source_feature": "distinct_threat_type_count",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 76.454524219,
+                "mean_absolute_contribution": 0.509696828,
+                "mean_signed_contribution": 0.087763899
+              },
+              {
+                "feature": "confidence_min",
+                "source_feature": "confidence_min",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 65.651287048,
+                "mean_absolute_contribution": 0.437675247,
+                "mean_signed_contribution": 0.128905302
+              },
+              {
+                "feature": "confidence_mean",
+                "source_feature": "confidence_mean",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 57.353070401,
+                "mean_absolute_contribution": 0.382353803,
+                "mean_signed_contribution": 0.100223801
+              },
+              {
+                "feature": "has_colon",
+                "source_feature": "has_colon",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "has_slash",
+                "source_feature": "has_slash",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "ioc_type=url",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "type_url",
+                "source_feature": "type_url",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 26.573187059,
+                "mean_absolute_contribution": 0.17715458,
+                "mean_signed_contribution": 0.013003606
+              },
+              {
+                "feature": "ioc_type=hash_sha256",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 24.353059836,
+                "mean_absolute_contribution": 0.162353732,
+                "mean_signed_contribution": 0.001194182
+              },
+              {
+                "feature": "type_hash_sha256",
+                "source_feature": "type_hash_sha256",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 24.353059836,
+                "mean_absolute_contribution": 0.162353732,
+                "mean_signed_contribution": 0.001194182
+              },
+              {
+                "feature": "has_dot",
+                "source_feature": "has_dot",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 23.035931976,
+                "mean_absolute_contribution": 0.15357288,
+                "mean_signed_contribution": 0.024387115
+              },
+              {
+                "feature": "ioc_type=ipv4",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 22.792965276,
+                "mean_absolute_contribution": 0.151953102,
+                "mean_signed_contribution": 0.034607202
+              },
+              {
+                "feature": "type_ipv4",
+                "source_feature": "type_ipv4",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 22.792965276,
+                "mean_absolute_contribution": 0.151953102,
+                "mean_signed_contribution": 0.034607202
+              },
+              {
+                "feature": "has_hyphen",
+                "source_feature": "has_hyphen",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.235076252,
+                "mean_absolute_contribution": 0.081567175,
+                "mean_signed_contribution": -0.002483834
+              },
+              {
+                "feature": "ioc_type=domain",
+                "source_feature": "ioc_type",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.014756745,
+                "mean_absolute_contribution": 0.080098378,
+                "mean_signed_contribution": -0.006568712
+              },
+              {
+                "feature": "type_domain",
+                "source_feature": "type_domain",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 12.014756745,
+                "mean_absolute_contribution": 0.080098378,
+                "mean_signed_contribution": -0.006568712
+              },
+              {
+                "feature": "earliest_observation_timestamp=__missing__",
+                "source_feature": "earliest_observation_timestamp",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "has_at_sign",
+                "source_feature": "has_at_sign",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "latest_observation_timestamp=__missing__",
+                "source_feature": "latest_observation_timestamp",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "observations_with_timestamps",
+                "source_feature": "observations_with_timestamps",
+                "feature_group": "observation",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "source_urlhaus",
+                "source_feature": "source_urlhaus",
+                "feature_group": "provenance_source",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "temporal_coverage",
+                "source_feature": "temporal_coverage",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "temporal_span_seconds",
+                "source_feature": "temporal_span_seconds",
+                "feature_group": "threat_context",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_cve",
+                "source_feature": "type_cve",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_email",
+                "source_feature": "type_email",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_md5",
+                "source_feature": "type_hash_md5",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_hash_sha1",
+                "source_feature": "type_hash_sha1",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ip_port",
+                "source_feature": "type_ip_port",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              },
+              {
+                "feature": "type_ipv6",
+                "source_feature": "type_ipv6",
+                "feature_group": "ioc_intrinsic",
+                "aggregate_absolute_contribution": 0.0,
+                "mean_absolute_contribution": 0.0,
+                "mean_signed_contribution": 0.0
+              }
+            ]
+          },
+          "feature_group_contribution": {
+            "aggregation": "mean absolute and signed sum of feature log-odds contributions per held-out example; also normalized by encoded group width",
+            "groups": {
+              "correlation": {
+                "encoded_feature_count": 3,
+                "mean_absolute_contribution_per_example": 2.019699844,
+                "mean_absolute_contribution_per_feature_per_example": 0.673233281,
+                "mean_signed_contribution_per_example": 0.191497748
+              },
+              "ioc_intrinsic": {
+                "encoded_feature_count": 23,
+                "mean_absolute_contribution_per_example": 4.547236733,
+                "mean_absolute_contribution_per_feature_per_example": 0.197705945,
+                "mean_signed_contribution_per_example": 0.489618912
+              },
+              "observation": {
+                "encoded_feature_count": 3,
+                "mean_absolute_contribution_per_example": 1.331044409,
+                "mean_absolute_contribution_per_feature_per_example": 0.44368147,
+                "mean_signed_contribution_per_example": 0.024158441
+              },
+              "provenance_source": {
+                "encoded_feature_count": 4,
+                "mean_absolute_contribution_per_example": 2.222926882,
+                "mean_absolute_contribution_per_feature_per_example": 0.55573172,
+                "mean_signed_contribution_per_example": 0.128295659
+              },
+              "threat_context": {
+                "encoded_feature_count": 14,
+                "mean_absolute_contribution_per_example": 11.241931296,
+                "mean_absolute_contribution_per_feature_per_example": 0.802995093,
+                "mean_signed_contribution_per_example": -0.275378454
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

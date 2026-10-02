@@ -37,19 +37,29 @@ vocabulary is the CTIP IOC schema plus the documented ThreatFox `ip:port` type.
 individual record. Dataset collection time belongs in the source dataset
 metadata, not copied onto every IOC as if it were an observation time.
 
-## Later entity resolution (not implemented)
+## Research entity resolution
 
-For records whose source types map to the same canonical type, consider them the
-same candidate IOC entity only when both `normalized_ioc_value` **and**
-`ioc_type` match. Different source names then add distinct source observations
-to that entity. Keep source IDs, references, timestamps, tags, and context
-separate; derive aggregates only as explicit downstream features.
+`research_data/entity_resolution/resolver.py` implements in-memory resolution
+for already adapted `UnifiedResearchRecord` values. Records group only when both
+`normalized_ioc_value` **and** `ioc_type` match. Different source names add
+their observations to one entity. Source IDs, references, timestamps, tags,
+context, and repeated observations are retained separately. No observation
+deduplication is performed; the first input record supplies the entity display
+value, while each observation retains its own source IOC value.
+The identity key is the entity's existing type and normalized-value fields;
+observation count and distinct-source count are derived from
+`source_observations` rather than stored as duplicate metadata.
 
 The same text with different types must remain separate. For example, the text
 `example.test` as a domain and as a URL is not the same typed indicator. Unknown
-or non-equivalent source IOC types must not be coerced into a match. URL
-normalization must preserve path/query case; only type-aware, documented
-normalization should be used for comparisons.
+or non-equivalent source IOC types fail validation and are not coerced into a
+match. URL normalization must preserve path/query case; only type-aware,
+documented normalization should be used for comparisons. The resolver does not
+load source datasets, persist records, calculate source agreement, or implement
+cross-source correlation. `research_data/correlation/` builds a separate
+deterministic summary from resolved records while retaining their observation
+payloads; it does not load datasets or establish empirical cross-source
+results.
 
 ## Proposed research feature groups
 

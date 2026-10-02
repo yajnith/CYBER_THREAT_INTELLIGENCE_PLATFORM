@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ctip.local/research/experiments/experiment_dataset_schema.json",
+  "title": "CTIP Experiment Dataset Row",
+  "description": "One typed IOC feature row and separate three-state target metadata. No model output is represented.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "experiment_id", "entity_identity", "features", "target", "target_metadata", "source_provenance", "raw_context_assertions"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "experiment_id": {"enum": ["A", "B", "C"]},
+    "entity_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ioc_type", "normalized_ioc_value"],
+      "properties": {
+        "ioc_type": {"$ref": "../targets/target_schema.json#/$defs/iocType"},
+        "normalized_ioc_value": {"type": "string", "minLength": 1}
+      }
+    },
+    "features": {"type": "object", "description": "Only the experiment's declared feature columns; target and evidence metadata are excluded."},
+    "target": {"enum": ["positive", "negative", "unknown"]},
+    "target_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason", "prediction_window", "outcome_evidence"],
+      "properties": {
+        "reason": {"type": "string"},
+        "prediction_window": {"type": ["object", "null"]},
+        "outcome_evidence": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "source_provenance": {"type": "array", "items": {"type": "object"}},
+    "raw_context_assertions": {"type": "array", "items": {"type": "object"}}
+  },
+  "dataset_invariants": {
+    "identity_key": ["ioc_type", "normalized_ioc_value"],
+    "missing_target": "unknown, never negative",
+    "duplicate_policy": "Exact duplicate rows collapse; conflicting feature or target rows for one typed identity fail clearly.",
+    "feature_selection": "A uses A columns; B uses A and B columns; C uses A, B, and C columns from research_data/features/feature_schema.json.",
+    "label_leakage": "Target, target reason, prediction window, and outcome evidence are metadata and never model input features. Assembly rejects an identity when an outcome-evidence source also appears in feature provenance; rebuild feature inputs excluding that label source before proceeding.",
+    "source_reported_context": "Preserved separately as feature provenance/context assertions; not promoted to truth labels."
+  }
+}

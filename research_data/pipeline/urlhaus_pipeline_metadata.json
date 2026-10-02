@@ -1,0 +1,131 @@
+{
+  "pipeline": "multi-source research adapters, typed entity resolution, and correlation",
+  "status": "completed",
+  "pipeline_run_timestamp": "2026-10-02T12:54:04.994936+00:00",
+  "included_sources": [
+    "urlhaus"
+  ],
+  "source_status": {
+    "urlhaus": {
+      "status": "processed",
+      "normalized_record_count": 14354,
+      "input_file": "research_data/urlhaus/urlhaus_normalized.json"
+    },
+    "threatfox": {
+      "status": "not_collected",
+      "normalized_record_count": 0,
+      "input_file": null,
+      "note": "No normalized ThreatFox dataset file was present; no ThreatFox records were used."
+    }
+  },
+  "source_collection_timestamps": {
+    "urlhaus": "2026-09-25 17:01:23 +05:30",
+    "threatfox": null
+  },
+  "input_files": {
+    "urlhaus": "research_data/urlhaus/urlhaus_normalized.json",
+    "threatfox": null
+  },
+  "input_sha256": {
+    "urlhaus": "1724f2c8dd97c3c83d71db6b33e347b2df6194d4926fad25b28ca566a36c3f4c"
+  },
+  "output_file": "research_data/unified/research_pipeline_results.json",
+  "output_format": "JSON array of correlation summaries with embedded unified entities and source observations",
+  "identity_rule": [
+    "ioc_type",
+    "normalized_ioc_value"
+  ],
+  "threatfox_status": "not_collected",
+  "multiple_source_datasets_included": false,
+  "empirical_cross_source_results_available": false,
+  "statistics": {
+    "normalized_input_record_count": 14354,
+    "normalized_records_by_source": {
+      "urlhaus": 14354
+    },
+    "adapted_record_count": 14354,
+    "resolved_entity_count": 14354,
+    "unique_ioc_type_identity_count": 14354,
+    "observation_count": 14354,
+    "source_record_count": 14354,
+    "source_count": 1,
+    "source_names": [
+      "urlhaus"
+    ],
+    "single_source_entity_count": 14354,
+    "multi_source_entity_count": 0,
+    "source_record_id_coverage": {
+      "observations_with_record_id": 14354,
+      "observations_without_record_id": 0
+    },
+    "source_reference_coverage": {
+      "observations_with_reference": 14354,
+      "observations_without_reference": 0
+    },
+    "reporter_coverage": {
+      "observations_with_reporter": 14354,
+      "distinct_reporter_count": 95
+    },
+    "threat_context_coverage": {
+      "observations_with_context": 14354,
+      "observations_without_context": 0,
+      "entities_with_context": 14354,
+      "threat_type_distribution": {
+        "malware_download": 14354
+      },
+      "distinct_threat_type_count": 1,
+      "malware_family_distribution": {},
+      "distinct_malware_family_count": 0
+    },
+    "tag_coverage": {
+      "observations_with_tags": 11976,
+      "observations_without_tags": 2378,
+      "entities_with_tags": 11976,
+      "distinct_tag_count": 535
+    },
+    "confidence_coverage": {
+      "observations_with_confidence": 0,
+      "observations_without_confidence": 14354,
+      "entities_with_confidence": 0,
+      "minimum": null,
+      "maximum": null,
+      "mean": null
+    },
+    "temporal_coverage": {
+      "observations_with_seen_timestamp_fields": 0,
+      "entities_with_correlation_temporal_bounds": 0,
+      "source_specific_timestamp_coverage": {
+        "urlhaus": {
+          "date_added": 14354,
+          "last_online": 12787
+        }
+      },
+      "urlhaus_observations_with_date_added": 14354,
+      "urlhaus_observations_with_last_online": 12787
+    },
+    "source_context_coverage": {
+      "urlhaus": {
+        "observation_count": 14354,
+        "observations_with_record_id": 14354,
+        "observations_with_reference": 14354,
+        "observations_with_reporter": 14354,
+        "context_field_coverage": {
+          "threat_type": 14354,
+          "tags": 11976,
+          "date_added": 14354,
+          "last_online": 12787,
+          "url_status": 14354
+        },
+        "source_specific_timestamp_coverage": {
+          "date_added": 14354,
+          "last_online": 12787
+        }
+      }
+    },
+    "context_richness_distribution": {
+      "1": 2378,
+      "2": 11976
+    }
+  },
+  "interpretation": "URLhaus-only execution. ThreatFox is not collected or unavailable; no cross-source results are claimed."
+}
