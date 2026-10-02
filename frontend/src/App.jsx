@@ -7,6 +7,7 @@ import './App.css'
 function App() {
   const [view, setView] = useState('dashboard')
   const [iocs, setIocs] = useState([])
+  const [sourceCount, setSourceCount] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -21,6 +22,7 @@ function App() {
       })
       .then((result) => {
         setIocs(result.data || [])
+        setSourceCount(result.source_count || 0)
         setLoading(false)
       })
       .catch((err) => {
@@ -31,18 +33,12 @@ function App() {
 
   const statistics = useMemo(() => {
     const highRisk = iocs.filter(
-      (ioc) =>
-        ioc.severity === 'high' ||
-        ioc.severity === 'critical'
+      (ioc) => ioc.risk_level === 'high' || ioc.risk_level === 'critical'
     ).length
 
     const critical = iocs.filter(
-      (ioc) => ioc.severity === 'critical'
+      (ioc) => ioc.risk_level === 'critical'
     ).length
-
-    const sources = new Set(
-      iocs.map((ioc) => ioc.source)
-    ).size
 
     const domains = iocs.filter(
       (ioc) => ioc.indicator_type === 'domain'
@@ -52,10 +48,10 @@ function App() {
       total: iocs.length,
       highRisk,
       critical,
-      sources,
+      sources: sourceCount,
       domains,
     }
-  }, [iocs])
+  }, [iocs, sourceCount])
 
   return (
     <div className="dashboard">
@@ -195,7 +191,7 @@ function App() {
 
               <div className="stat-card">
                 <span className="stat-label">
-                  Sources
+                  Correlated Sources
                 </span>
 
                 <strong>
@@ -215,7 +211,7 @@ function App() {
                     <h2>Risk Distribution</h2>
 
                     <p>
-                      Current IOC severity profile
+                      Current deterministic risk profile
                     </p>
                   </div>
                 </div>
@@ -228,7 +224,7 @@ function App() {
                     'low',
                   ].map((level) => {
                     const count = iocs.filter(
-                      (ioc) => ioc.severity === level
+                      (ioc) => ioc.risk_level === level
                     ).length
 
                     const percentage =
@@ -342,9 +338,10 @@ function App() {
                       <tr>
                         <th>Indicator</th>
                         <th>Type</th>
-                        <th>Severity</th>
+                        <th>Risk Level</th>
+                        <th>Risk Score</th>
                         <th>Confidence</th>
-                        <th>Source</th>
+                        <th>Observed Sources</th>
                         <th>Last Seen</th>
                       </tr>
                     </thead>
@@ -364,18 +361,20 @@ function App() {
 
                           <td>
                             <span
-                              className={`severity ${ioc.severity}`}
+                              className={`severity ${ioc.risk_level}`}
                             >
-                              {ioc.severity}
+                              {ioc.risk_level}
                             </span>
                           </td>
+
+                          <td>{ioc.risk_score}/100</td>
 
                           <td>
                             {ioc.confidence}%
                           </td>
 
                           <td>
-                            {ioc.source}
+                            {(ioc.sources || []).join(', ') || '—'}
                           </td>
 
                           <td>

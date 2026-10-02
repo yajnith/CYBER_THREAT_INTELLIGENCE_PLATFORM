@@ -1,5 +1,6 @@
 from app.database.database import SessionLocal
 from app.database.models import IOC, IOCObservation
+from app.api.iocs import get_ioc
 from app.services.ioc_correlation import get_ioc_correlation
 
 
@@ -74,4 +75,53 @@ def test_ioc_correlation_counts_sources_and_threat_types():
             db.delete(test_ioc)
             db.commit()
 
+        db.close()
+
+
+def test_ioc_detail_returns_observation_derived_sources_and_risk_explanation():
+    db = SessionLocal()
+
+    try:
+        ioc = IOC(
+            indicator_type="domain",
+            value="pytest-detail-sources.example",
+            normalized_value="pytest-detail-sources.example",
+            source="detail_feed_a",
+            threat_type="malware",
+            confidence=80,
+            severity="high",
+            tags=["pytest"],
+        )
+        db.add(ioc)
+        db.commit()
+        db.refresh(ioc)
+        db.add_all([
+            IOCObservation(ioc_id=ioc.id, source="detail_feed_a", observed_at=ioc.created_at),
+            IOCObservation(ioc_id=ioc.id, source="detail_feed_b", observed_at=ioc.created_at),
+            IOCObservation(ioc_id=ioc.id, source="detail_feed_b", observed_at=ioc.created_at),
+        ])
+        db.commit()
+
+        result = get_ioc(ioc.id, db)
+
+        assert result["source_count"] == 2
+        assert result["sources"] == ["detail_feed_a", "detail_feed_b"]
+        assert result["correlation"]["source_count"] == 2
+        assert result["correlation"]["sources"] == result["sources"]
+        assert result["risk_explanation"] == {
+            "severity_score": 75,
+            "severity_contribution": 45.0,
+            "confidence_contribution": 32.0,
+            "final_deterministic_score": 77,
+            "risk_level": "high",
+        }
+    finally:
+        test_ioc = db.query(IOC).filter(
+            IOC.indicator_type == "domain",
+            IOC.normalized_value == "pytest-detail-sources.example",
+        ).first()
+        if test_ioc:
+            db.query(IOCObservation).filter(IOCObservation.ioc_id == test_ioc.id).delete()
+            db.delete(test_ioc)
+            db.commit()
         db.close()

@@ -1,6 +1,7 @@
 from app.enrichment.ioc_enricher import enrich_ioc
 from app.scoring.risk_scorer import (
     calculate_risk_score,
+    explain_risk_score,
     get_risk_level,
 )
 
@@ -17,6 +18,18 @@ def test_high_risk_score():
 
     assert score == 77
     assert get_risk_level(score) == "high"
+
+
+def test_risk_explanation_matches_deterministic_formula():
+    result = explain_risk_score("high", 80)
+
+    assert result == {
+        "severity_score": 75,
+        "severity_contribution": 45.0,
+        "confidence_contribution": 32.0,
+        "final_deterministic_score": 77,
+        "risk_level": "high",
+    }
 
 
 def test_medium_risk_score():

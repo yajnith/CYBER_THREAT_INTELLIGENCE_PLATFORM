@@ -7,17 +7,25 @@ SEVERITY_SCORES = {
 
 
 def calculate_risk_score(severity: str, confidence: int) -> int:
-    severity_score = SEVERITY_SCORES.get(
-        severity.lower(),
-        50
-    )
+    return explain_risk_score(severity, confidence)[
+        "final_deterministic_score"
+    ]
 
-    score = (
-        severity_score * 0.6
-        + confidence * 0.4
-    )
 
-    return round(score)
+def explain_risk_score(severity: str, confidence: int) -> dict:
+    """Return the deterministic score and its weighted components."""
+    severity_score = SEVERITY_SCORES.get(severity.lower(), 50)
+    severity_contribution = severity_score * 0.6
+    confidence_contribution = confidence * 0.4
+    final_score = round(severity_contribution + confidence_contribution)
+
+    return {
+        "severity_score": severity_score,
+        "severity_contribution": severity_contribution,
+        "confidence_contribution": confidence_contribution,
+        "final_deterministic_score": final_score,
+        "risk_level": get_risk_level(final_score),
+    }
 
 
 def get_risk_level(score: int) -> str:

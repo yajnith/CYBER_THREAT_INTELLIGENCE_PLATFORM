@@ -62,6 +62,8 @@ function IOCInvestigation() {
 
   const record = ioc?.ioc
   const enrichment = ioc?.enrichment
+  const correlation = ioc?.correlation
+  const riskExplanation = ioc?.risk_explanation
 
   return (
     <section className="investigation">
@@ -145,8 +147,13 @@ function IOCInvestigation() {
             <div>
               <span>Source</span>
               <strong>
-                {record.source}
+                {correlation?.sources?.join(', ') || 'No observations'}
               </strong>
+            </div>
+
+            <div>
+              <span>Correlated Sources</span>
+              <strong>{ioc.source_count ?? 0}</strong>
             </div>
 
             <div>
@@ -192,6 +199,29 @@ function IOCInvestigation() {
               >
                 {ioc.risk_level}
               </strong>
+            </div>
+          </div>
+
+          <div className="enrichment-section">
+            <h3>Deterministic Risk Breakdown</h3>
+            <p>Severity contributes 60%; confidence contributes 40%.</p>
+            <div className="enrichment-grid">
+              <div>
+                <span>Severity Score</span>
+                <strong>{riskExplanation?.severity_score ?? '—'}/100</strong>
+              </div>
+              <div>
+                <span>Severity Contribution (60%)</span>
+                <strong>{riskExplanation?.severity_contribution ?? '—'}</strong>
+              </div>
+              <div>
+                <span>Confidence Contribution (40%)</span>
+                <strong>{riskExplanation?.confidence_contribution ?? '—'}</strong>
+              </div>
+              <div>
+                <span>Final Deterministic Score</span>
+                <strong>{riskExplanation?.final_deterministic_score ?? '—'}/100</strong>
+              </div>
             </div>
           </div>
 

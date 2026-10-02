@@ -7,6 +7,7 @@ from app.enrichment.ioc_enricher import enrich_ioc
 from app.schemas.ioc import IOCCreate
 from app.scoring.risk_scorer import (
     calculate_risk_score,
+    explain_risk_score,
     get_risk_level,
 )
 from app.services.ioc_correlation import get_ioc_correlation
@@ -37,9 +38,35 @@ def get_iocs(
         .all()
     )
 
+    data = []
+    all_sources = set()
+    for record in records:
+        correlation = get_ioc_correlation(record.id, db)
+        all_sources.update(correlation["sources"])
+        risk = explain_risk_score(record.severity, record.confidence)
+        data.append({
+            "id": record.id,
+            "indicator_type": record.indicator_type,
+            "value": record.value,
+            "normalized_value": record.normalized_value,
+            "source": record.source,
+            "threat_type": record.threat_type,
+            "confidence": record.confidence,
+            "severity": record.severity,
+            "tags": record.tags,
+            "first_seen": record.first_seen,
+            "last_seen": record.last_seen,
+            "created_at": record.created_at,
+            "sources": correlation["sources"],
+            "source_count": correlation["source_count"],
+            "risk_score": risk["final_deterministic_score"],
+            "risk_level": risk["risk_level"],
+        })
+
     return {
         "count": len(records),
-        "data": records,
+        "source_count": len(all_sources),
+        "data": data,
     }
 
 
@@ -125,11 +152,18 @@ def get_ioc(
     )
 
     risk_level = get_risk_level(risk_score)
+    risk_explanation = explain_risk_score(
+        record.severity,
+        record.confidence,
+    )
 
     return {
         "ioc": record,
         "risk_score": risk_score,
         "risk_level": risk_level,
+        "risk_explanation": risk_explanation,
+        "source_count": correlation["source_count"],
+        "sources": correlation["sources"],
         "enrichment": enrichment,
         "observations": observations,
         "correlation": correlation,
