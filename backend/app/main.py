@@ -5,6 +5,7 @@ from app.database.database import Base
 import app.database.models
 
 from app.api.iocs import router as ioc_router
+from app.api.ingestion import router as ingestion_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -29,6 +30,7 @@ app.add_middleware(
 )
 
 app.include_router(ioc_router)
+app.include_router(ingestion_router)
 
 
 @app.get("/")

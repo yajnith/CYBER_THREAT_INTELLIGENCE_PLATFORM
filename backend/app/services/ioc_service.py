@@ -68,6 +68,7 @@ def process_ioc(
 
     return {
         "ioc": record,
+        "is_new": existing is None,
         "risk_score": risk_score,
         "risk_level": risk_level,
         "enrichment": enrichment,
