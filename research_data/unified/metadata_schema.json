@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ctip.local/research/unified/metadata-schema.json",
+  "title": "CTIP unified CTI research dataset metadata",
+  "description": "Metadata contract for a future unified dataset. This file contains no dataset records or acquired statistics.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "source_datasets",
+    "collection_timestamps",
+    "record_counts",
+    "entity_resolution",
+    "feature_experiments",
+    "label_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "status": {
+      "enum": ["design_only", "sampled", "profiled", "unified"]
+    },
+    "source_datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "source_url", "access_method", "record_count"],
+        "properties": {
+          "source": { "enum": ["urlhaus", "threatfox"] },
+          "source_url": { "type": ["string", "null"] },
+          "access_method": { "type": ["string", "null"] },
+          "record_count": { "type": ["integer", "null"], "minimum": 0 },
+          "collection_timestamp": { "type": ["string", "null"], "format": "date-time" },
+          "metadata_path": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "collection_timestamps": {
+      "type": "object",
+      "description": "Per-source collection times; do not synthesize per-IOC observation times from these values.",
+      "additionalProperties": { "type": ["string", "null"], "format": "date-time" }
+    },
+    "record_counts": {
+      "type": "object",
+      "required": ["source_records", "unified_entities", "duplicate_source_iocs"],
+      "properties": {
+        "source_records": { "type": "object", "additionalProperties": { "type": ["integer", "null"], "minimum": 0 } },
+        "unified_entities": { "type": ["integer", "null"], "minimum": 0 },
+        "duplicate_source_iocs": { "type": ["integer", "null"], "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "entity_resolution": {
+      "type": "object",
+      "required": ["status", "identity_key", "rules"],
+      "properties": {
+        "status": { "enum": ["not_implemented", "implemented"] },
+        "identity_key": { "const": ["ioc_type", "normalized_ioc_value"] },
+        "rules": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "feature_experiments": {
+      "type": "object",
+      "required": ["A", "B", "C"],
+      "properties": {
+        "A": { "$ref": "#/$defs/featureGroup" },
+        "B": { "$ref": "#/$defs/featureGroup" },
+        "C": { "$ref": "#/$defs/featureGroup" }
+      },
+      "additionalProperties": false
+    },
+    "label_policy": {
+      "type": "object",
+      "required": ["target_defined", "urlhaus_threat_as_target", "deterministic_risk_score"],
+      "properties": {
+        "target_defined": { "const": false },
+        "urlhaus_threat_as_target": { "const": false },
+        "deterministic_risk_score": { "const": "rule_based_baseline_only" },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "featureGroup": {
+      "type": "object",
+      "required": ["name", "feature_families", "target_leakage_policy"],
+      "properties": {
+        "name": { "type": "string" },
+        "feature_families": { "type": "array", "items": { "type": "string" } },
+        "target_leakage_policy": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

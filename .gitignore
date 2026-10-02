@@ -71,3 +71,5 @@ research_data/urlhaus/*.json
 
 # Keep research metadata
 !research_data/urlhaus/metadata.json
+research_data/threatfox/*.json
+!research_data/threatfox/metadata.json

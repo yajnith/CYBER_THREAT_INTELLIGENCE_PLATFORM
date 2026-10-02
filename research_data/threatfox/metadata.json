@@ -1,0 +1,62 @@
+{
+  "dataset": "ThreatFox",
+  "source": "ThreatFox Community API",
+  "source_url": "https://threatfox-api.abuse.ch/api/v1/",
+  "documentation_url": "https://threatfox.abuse.ch/api/",
+  "access_method": "Official HTTPS API POST: query=get_iocs with days=1..7; query=types supplies the IOC-type catalog.",
+  "authentication_required": true,
+  "auth_key_environment_variable": "THREATFOX_AUTH_KEY",
+  "collection_timestamp": null,
+  "days_requested": null,
+  "status": "not_collected",
+  "note": "No ThreatFox records are included or claimed. Run fetch.py after configuring a personal Auth-Key to acquire source data.",
+  "raw_record_count": null,
+  "normalized_record_count": null,
+  "malformed_record_count": null,
+  "ioc_type_distribution": {},
+  "threat_type_distribution": {},
+  "malware_family_distribution": {},
+  "reporter_distribution": {},
+  "unique_reporter_count": null,
+  "tag_distribution": {},
+  "missing_value_counts": {
+    "threatfox_id": null,
+    "ioc": null,
+    "ioc_type": null,
+    "ioc_type_description": null,
+    "threat_type": null,
+    "threat_type_description": null,
+    "malware_family": null,
+    "malware_printable": null,
+    "malware_alias": null,
+    "malware_malpedia": null,
+    "confidence_level": null,
+    "first_seen": null,
+    "last_seen": null,
+    "reporter": null,
+    "reference": null,
+    "tags": null
+  },
+  "duplicate_counts": {
+    "duplicate_identifiers": null,
+    "duplicate_iocs": null
+  },
+  "unknown_ioc_type_count": null,
+  "ioc_type_catalog_available": null,
+  "normalization_consistency_failures": null,
+  "data_quality": {
+    "malformed_records": null,
+    "missing_identifiers": null,
+    "unknown_ioc_types": null,
+    "normalization_consistency_failures": null
+  },
+  "preprocessing": [
+    "Validated the API data array and retained malformed-record diagnostics.",
+    "Trimmed IOC values and normalized IOC type names to lowercase.",
+    "Lowercased domain IOCs and hash IOCs; retained other IOC value casing.",
+    "Normalized null, scalar, and list tags to a list of trimmed strings.",
+    "Mapped documented API fields to a stable schema; preserved unrecognized source fields in additional_fields.",
+    "Kept source timestamps and references verbatim to preserve provenance.",
+    "Counted duplicate IOC/type pairs without deleting records from the normalized output."
+  ]
+}
